@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.ui
+package com.clevmania.leosbook.ui.auth
 
 import androidx.lifecycle.ViewModel
 

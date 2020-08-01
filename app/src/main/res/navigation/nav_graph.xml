@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.clevmania.leosbook.ui.SignInFragment"
+        android:name="com.clevmania.leosbook.ui.auth.SignInFragment"
         android:label="@string/login"
         tools:layout="@layout/sign_in_fragment" />
 </navigation>

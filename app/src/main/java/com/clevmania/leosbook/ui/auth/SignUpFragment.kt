@@ -1,10 +1,11 @@
-package com.clevmania.leosbook.ui
+package com.clevmania.leosbook.ui.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.clevmania.leosbook.R
+import com.clevmania.leosbook.ui.AuthFragment
 import com.clevmania.leosbook.utils.ValidationException
 import com.clevmania.leosbook.utils.ValidationType
 import com.clevmania.leosbook.utils.validate
