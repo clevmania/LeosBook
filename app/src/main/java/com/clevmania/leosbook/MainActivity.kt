@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val navController by lazy { findNavController(R.id.nav_host_fragment)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Todo 1 Add theme
+        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)

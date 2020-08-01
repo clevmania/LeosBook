@@ -1,8 +1,6 @@
 package com.clevmania.leosbook.ui
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +11,7 @@ import com.clevmania.leosbook.utils.validate
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.sign_up_fragment.*
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : AuthFragment() {
     private lateinit var auth : FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
