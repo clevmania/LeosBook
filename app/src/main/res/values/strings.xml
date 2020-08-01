@@ -8,4 +8,6 @@
     <string name="continue_with_facebook">Continue With Facebook</string>
     <string name="signup">SignUp</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="mobile">Mobile</string>
+    <string name="register">SignUp</string>
 </resources>
