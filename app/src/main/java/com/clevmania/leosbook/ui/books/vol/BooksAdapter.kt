@@ -3,11 +3,10 @@ package com.clevmania.leosbook.ui.books.vol
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
-import com.clevmania.leosbook.ui.books.BookStoreFragment
+import com.clevmania.leosbook.ui.books.BookStore
 import kotlinx.android.synthetic.main.item_book.view.*
 
 /**
@@ -15,7 +14,7 @@ import kotlinx.android.synthetic.main.item_book.view.*
  * for LeosBook
  */
 
-class BookAdapter(private val booksList: List<BookStoreFragment.BookStore>) :
+class BookAdapter(private var booksList: MutableList<BookStore>) :
     RecyclerView.Adapter<BookAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,8 +29,15 @@ class BookAdapter(private val booksList: List<BookStoreFragment.BookStore>) :
         holder.bindView(booksList[position])
     }
 
+
+    fun updateItems(filteredList: List<BookStore>) {
+        booksList = mutableListOf()
+        booksList.addAll(filteredList)
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(book: BookStoreFragment.BookStore) {
+        fun bindView(book: BookStore) {
             Glide.with(itemView.context)
                 .load(book.thumbnail)
                 .placeholder(R.drawable.img_placeholder)

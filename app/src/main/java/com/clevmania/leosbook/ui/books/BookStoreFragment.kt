@@ -1,15 +1,15 @@
 package com.clevmania.leosbook.ui.books
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.clevmania.leosbook.BookStoreService
 import com.clevmania.leosbook.R
+import com.clevmania.leosbook.extension.afterTextChanged
 import com.clevmania.leosbook.extension.formatPrice
+import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.GroundFragment
 import com.clevmania.leosbook.ui.books.vol.BookAdapter
 import com.clevmania.leosbook.utils.InjectorUtils
@@ -29,7 +29,8 @@ class BookStoreFragment : GroundFragment() {
         super.onCreate(savedInstanceState)
 
         viewModelFactory = InjectorUtils.provideViewModelFactory()
-        bookViewModel = ViewModelProvider(this, viewModelFactory).get(BookStoreViewModel::class.java)
+        bookViewModel =
+            ViewModelProvider(this, viewModelFactory).get(BookStoreViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -47,6 +48,7 @@ class BookStoreFragment : GroundFragment() {
         btnHistory.apply { setOnClickListener { bookViewModel.getBooks(text.toString()) } }
         adapter = BookAdapter(bookStore)
         rvBookList.adapter = adapter
+        searchBooks()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -66,7 +68,7 @@ class BookStoreFragment : GroundFragment() {
 
             bookResponse.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    if(bookStore.isNotEmpty())bookStore.clear()
+                    if (bookStore.isNotEmpty()) bookStore.clear()
                     it.items.forEach { item ->
                         bookStore.add(
                             BookStore(
@@ -79,15 +81,29 @@ class BookStoreFragment : GroundFragment() {
                             )
                         )
                     }
+                    grpBookStore.makeVisible()
                     adapter.notifyDataSetChanged()
                 }
             })
         }
     }
 
-    data class BookStore(
-        val title: String, val thumbnail: String, val category: String,
-        val authors: List<String>, val price: String, val volumeId: String
-    )
+    private fun searchBooks() {
+        tieSearchBooks.afterTextChanged { query ->
+            if (!query.isBlank()) {
+                val searchResult = bookStore.filter {
+                    it.title.toLowerCase().contains(query.toLowerCase())
+                }
+                adapter.updateItems(searchResult)
+            } else {
+                adapter.updateItems(bookStore)
+            }
+        }
+    }
 
 }
+
+data class BookStore(
+    val title: String, val thumbnail: String, val category: String,
+    val authors: List<String>, val price: String, val volumeId: String
+)
