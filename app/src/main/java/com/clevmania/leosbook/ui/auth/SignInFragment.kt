@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.ui.AuthFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -22,6 +23,13 @@ class SignInFragment : AuthFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.sign_in_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        mbSignInWithGoogle.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_bookStoreFragment)
+        }
     }
 
     private fun signUpUser(email: String, password: String) {

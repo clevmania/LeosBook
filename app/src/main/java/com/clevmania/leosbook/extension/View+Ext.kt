@@ -13,3 +13,7 @@ fun View.makeVisible(){ this.visibility = VISIBLE }
 fun View.makeGone(){ this.visibility = GONE}
 
 fun View.makeInVisible() { this.visibility = View.INVISIBLE}
+
+fun Int.formatPrice(): String{
+    return "NGN ${this * 20}"
+}
