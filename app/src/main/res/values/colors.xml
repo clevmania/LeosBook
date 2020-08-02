@@ -10,4 +10,10 @@
     <color name="colorTextBody">#211F1F</color>
     <color name="colorTextBodyLight">#7D7C7C</color>
     <color name="colorPrimaryButton">#7D7C7C</color>
+
+    <color name="colorGradientStart">#4c84FF</color>
+    <color name="colorGradientEnd">#18a3fe</color>
+
+    <color name="colorIntroTitle">#000000</color>
+    <color name="colorIntroDescription">#656565</color>
 </resources>

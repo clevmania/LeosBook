@@ -10,4 +10,16 @@
     <string name="forgot_password">Forgot Password</string>
     <string name="mobile">Mobile</string>
     <string name="register">SignUp</string>
+    <string name="browse_the_largest_catalog">Browse through a catalog of books on our platform.</string>
+    <string name="find_books_easily">Find Books Easily</string>
+    <string name="find_books">Find Books Easily</string>
+    <string name="seamless_payment">Seamless Payment</string>
+    <string name="view_transactions"><![CDATA[View Transactions & Orders]]></string>
+    <string name="refunds">Refunds</string>
+    <string name="find_book_body">Browse through a catalog of books on our platform.</string>
+    <string name="seamless_payment_body">Pay for your favourite books with different payment methods.</string>
+    <string name="view_transactions_body">View transactions and orders from customers easily.</string>
+    <string name="refund_customers_body">Refund your customers easily without stress.</string>
+    <string name="next_slide">Next</string>
+    <string name="start_screen">Start</string>
 </resources>
