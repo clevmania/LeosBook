@@ -10,6 +10,13 @@
     <color name="colorTextBody">#211F1F</color>
     <color name="colorTextBodyLight">#7D7C7C</color>
     <color name="colorPrimaryButton">#7D7C7C</color>
+    <color name="colorGray">#969393</color>
+    <color name="colorSearchIcon">#7E7B7B</color>
+    <color name="colorButtonText">#7E7B7B</color>
+    <color name="colorTabText">#6F6E6E</color>
+    <color name="colorRatingBarNormal">#E5E5E5</color>
+    <color name="lightGray">#f3f3f3</color>
+    <color name="colorFavIconTint">#C4C7C7</color>
 
     <color name="colorGradientStart">#4c84FF</color>
     <color name="colorGradientEnd">#18a3fe</color>

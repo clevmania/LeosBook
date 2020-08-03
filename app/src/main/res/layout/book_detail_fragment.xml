@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.books.detail.BookDetailFragment">
+
+    <TextView
+        android:id="@+id/tvBookTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/source_sans_pro_semi_bold"
+        android:text="Prosper’s Demon"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/tvBookPrice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBookPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="NGN 4,000"
+        android:textColor="@color/colorBlack"
+        android:textSize="18sp"
+        android:fontFamily="@font/source_sans_pro_semi_bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvBookAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="K. J. Parker"
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:textSize="12sp"
+        android:textColor="@color/colorTextBody"
+        app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
+
+    <RatingBar
+        android:id="@+id/rbBooksRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:numStars="5"
+        android:rating="3"
+        android:isIndicator="true"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:theme="@style/RatingBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
+
+    <TextView
+        android:id="@+id/tvNumOfReviews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="(200 reviews)"
+        android:textSize="12sp"
+        android:textColor="@color/colorTextBodyLight"
+        android:fontFamily="@font/source_sans_pro_regular"
+        app:layout_constraintBottom_toBottomOf="@+id/rbBooksRating"
+        app:layout_constraintStart_toEndOf="@+id/rbBooksRating"
+        app:layout_constraintTop_toTopOf="@+id/rbBooksRating" />
+
+    <ImageView
+        android:id="@+id/ivBookPreview"
+        android:layout_width="0dp"
+        android:layout_height="184dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rbBooksRating"
+        tools:src="@tools:sample/avatars" />
+
+    <!--    <FrameLayout-->
+    <!--        android:id="@+id/flDetailsContainer"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        app:layout_constraintBottom_toTopOf="@+id/mbAddToCart"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/ivBookPreview">-->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/mbAddToCart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBookPreview">
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tlBookDetails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabIndicator="@drawable/ic_tab_divider"
+            app:tabIndicatorColor="@color/colorTextBody"
+            app:tabSelectedTextColor="@color/colorTextBody"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabTextColor="@color/colorTabText"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:id="@+id/vpBookDetailsPager"/>
+
+    </LinearLayout>
+
+    <!--    </FrameLayout>-->
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbAddToCart"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorBlack"
+        android:text="ADD TO CART"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

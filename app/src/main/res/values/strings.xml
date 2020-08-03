@@ -22,4 +22,15 @@
     <string name="refund_customers_body">Refund your customers easily without stress.</string>
     <string name="next_slide">Next</string>
     <string name="start_screen">Start</string>
+    <string name="title_api_error">Something Went Wrong</string>
+    <string name="title_api_success">Congratulations</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shopping_cart">Cart</string>
+    <string name="fav_books">Favourite</string>
+    <string name="description_page_title">Description</string>
+    <string name="product_page_title">Product Details</string>
+    <string name="reviews_page_title">Reviews</string>
+    <string name="none_available">N/A</string>
+
 </resources>
