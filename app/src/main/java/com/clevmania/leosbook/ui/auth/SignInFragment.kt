@@ -50,9 +50,6 @@ class SignInFragment : AuthFragment() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        // navigate home
-                        // Todo 3 save user to pref
-                        auth.currentUser
                         findNavController()
                             .navigate(R.id.action_signInFragment_to_bookStoreFragment)
                     } else {

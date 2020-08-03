@@ -35,6 +35,8 @@
     <string name="pay_now">PAY %s</string>
     <string name="semi_bold">source_sans_pro_semi_bold</string>
     <string name="number_picker_formatter">%2d</string>
-    <string name="processing">Processing...</string>
+    <string name="processing">Processing…</string>
+    <string name="last_name">Last name</string>
+    <string name="first_name">First name</string>
 
 </resources>

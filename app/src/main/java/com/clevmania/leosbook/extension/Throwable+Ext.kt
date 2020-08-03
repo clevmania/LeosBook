@@ -19,7 +19,7 @@ fun Throwable.toDefaultErrorMessage(): String {
             return when (code()) {
                 in 500..511 -> {
                     //server error
-                    Constants.serverError
+                    Constants.SERVER_ERROR
                 }
                 else -> {
                     //client error
@@ -30,23 +30,23 @@ fun Throwable.toDefaultErrorMessage(): String {
                             .asJsonObject["message"]
                             .asString
                     } catch (e: Exception) {
-                        Constants.clientError
+                        Constants.CLIENT_ERROR
                     }
                 }
             }
         }
         is SocketTimeoutException -> {
-            return Constants.socketTimeoutError
+            return Constants.SOCKET_TIMEOUT_ERROR
         }
         is UnknownHostException ->{
-            return Constants.connectionError
+            return Constants.CONNECTION_ERROR
         }
         is ConnectException -> {
-            return Constants.connectionError
+            return Constants.CONNECTION_ERROR
         }
         is IOException -> {
 //            Timber.d(this)
-            return Constants.ioError
+            return Constants.IO_ERROR
 
         }
         else -> {

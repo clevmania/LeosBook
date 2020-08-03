@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
+import com.clevmania.leosbook.data.FirebaseUtils
+import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.ui.AuthFragment
 import com.clevmania.leosbook.utils.ValidationException
 import com.clevmania.leosbook.utils.ValidationType
@@ -38,6 +40,8 @@ class SignUpFragment : AuthFragment() {
     private fun signUserUp(){
         try {
             toggleBlockingProgress(true)
+            val firstName = tilFirstName.validate(ValidationType.NAME, getString(R.string.first_name))
+            val lastName = tilLastName.validate(ValidationType.NAME, getString(R.string.last_name))
             val email = tilEmail.validate(ValidationType.EMAIL,getString(R.string.email))
             val mobile = tilMobile.validate(ValidationType.PHONE, getString(R.string.mobile))
             val password = tilPassword.validate(ValidationType.PASSWORD, getString(R.string.password))
@@ -45,11 +49,13 @@ class SignUpFragment : AuthFragment() {
             auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener {task ->
                     if(task.isSuccessful){
-                        auth.currentUser
-                        findNavController().navigate(R.id.action_signUpFragment_to_bookStoreFragment)
-                        // Todo 2 save details to shared pref
+                        val newUser = User(firstName, lastName, mobile, email)
+                        auth.uid?.let {
+                            FirebaseUtils.saveUserDetails(newUser,it)
+                            findNavController()
+                                .navigate(R.id.action_signUpFragment_to_bookStoreFragment)
+                        }
                     }else{
-                        // Auth Failed
                         longSnackBar("Authentication Failed, Incorrect Details provided")
                     }
                 }
