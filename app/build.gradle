@@ -82,6 +82,10 @@ dependencies {
     /**Number Wheel*/
     implementation 'com.shawnlin:number-picker:2.4.10'
 
+    /**Google play services*/
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'

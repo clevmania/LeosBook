@@ -5,6 +5,7 @@ package com.clevmania.leosbook.constants
  * for LeosBook
  */
 object Constants {
+    const val RC_SIGN_IN: Int = 1414
     const val LEOS_USER: String = "users"
     const val LEOS_BOOKS: String = "leobook"
     const val BOOK_QUANTITY: Int = 1
