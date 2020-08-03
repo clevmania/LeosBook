@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.text.HtmlCompat
 import androidx.lifecycle.Observer
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.ui.books.detail.BookDetailViewModel
@@ -27,7 +28,7 @@ class DescriptionFragment : Fragment() {
         with(viewModel){
             bookDescription.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    tvDescription.text = it
+                    tvDescription.text = HtmlCompat.fromHtml(it,HtmlCompat.FROM_HTML_MODE_LEGACY)
                 }
             })
         }

@@ -49,6 +49,7 @@ class BookStoreFragment : GroundFragment() {
         adapter = BookAdapter(bookStore)
         rvBookList.adapter = adapter
         searchBooks()
+        grpBookStore.makeVisible()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -81,7 +82,6 @@ class BookStoreFragment : GroundFragment() {
                             )
                         )
                     }
-                    grpBookStore.makeVisible()
                     adapter.notifyDataSetChanged()
                 }
             })

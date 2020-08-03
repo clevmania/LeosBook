@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.clevmania.leosbook.data.Cart
+import com.clevmania.leosbook.data.CartLocalDataSource
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.toDefaultErrorMessage
 import com.clevmania.leosbook.ui.books.detail.model.BookDetailResponse
@@ -11,7 +13,11 @@ import com.clevmania.leosbook.utils.UiEventUtils
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
-class BookDetailViewModel(private val bookDetailDataSource: BookDetailDataSource) : ViewModel() {
+class BookDetailViewModel(
+    private val bookDetailDataSource: BookDetailDataSource,
+    private val cartLocalDataSource: CartLocalDataSource
+) : ViewModel() {
+
     private val _progress = MutableLiveData<UiEventUtils<Boolean>>()
     val progress : LiveData<UiEventUtils<Boolean>> = _progress
 
@@ -49,25 +55,27 @@ class BookDetailViewModel(private val bookDetailDataSource: BookDetailDataSource
         _bookDescription.value = UiEventUtils(desc)
     }
 
-//    fun addBookToCart(cds : CartLocalDataSource, cart : Cart){
-//        viewModelScope.launch {
-//            try {
-//                val insertSuccess = cds.insertOrReplaceCartItems(cart)
-//                _itemInCart.value = UiEventUtils(insertSuccess)
-//            }catch (ex : Exception){
-//                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
-//            }
-//        }
-//    }
-//
-//    fun increaseCartCounter(cds: CartLocalDataSource){
-//        viewModelScope.launch {
-//            try {
-//                val count = cds.countItemsInCart(FirebaseUtils.getUID())
-//                _cartCounter.value = UiEventUtils(count)
-//            }catch (ex : Exception){
-//                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
-//            }
-//        }
-//    }
+    fun addBookToCart(cart : Cart){
+        viewModelScope.launch {
+            try {
+                val insertSuccess = cartLocalDataSource.insertOrReplaceCartItems(cart)
+                _itemInCart.value = UiEventUtils(insertSuccess)
+            }catch (ex : Exception){
+                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
+            }
+        }
+    }
+
+    fun increaseCartCounter(){
+        viewModelScope.launch {
+            try {
+                FirebaseUtils.getUID()?.let {
+                    val count = cartLocalDataSource.countItemsInCart(it)
+                    _cartCounter.value = UiEventUtils(count)
+                }
+            }catch (ex : Exception){
+                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
+            }
+        }
+    }
 }

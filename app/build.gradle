@@ -74,6 +74,13 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-play-services:$coroutines"
 
+    /**Room */
+    implementation "androidx.room:room-ktx:$room"
+    kapt "androidx.room:room-compiler:$room"
+
+    /**Number Wheel*/
+    implementation 'com.shawnlin:number-picker:2.4.10'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

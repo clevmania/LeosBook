@@ -32,5 +32,8 @@
     <string name="product_page_title">Product Details</string>
     <string name="reviews_page_title">Reviews</string>
     <string name="none_available">N/A</string>
+    <string name="pay_now">PAY %s</string>
+    <string name="semi_bold">source_sans_pro_semi_bold</string>
+    <string name="number_picker_formatter">%2d</string>
 
 </resources>
