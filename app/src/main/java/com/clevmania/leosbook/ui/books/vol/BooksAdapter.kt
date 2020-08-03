@@ -3,10 +3,12 @@ package com.clevmania.leosbook.ui.books.vol
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.ui.books.BookStore
+import com.clevmania.leosbook.ui.books.BookStoreFragmentDirections
 import kotlinx.android.synthetic.main.item_book.view.*
 
 /**
@@ -49,9 +51,9 @@ class BookAdapter(private var booksList: MutableList<BookStore>) :
             itemView.tvBookTitle.text = book.title
 
             itemView.setOnClickListener {
-//                val action = BookStoreFragmentDirections
-//                    .actionBookStoreFragmentToBookDetailFragment(book.volumeId)
-//                it.findNavController().navigate(action)
+                val action = BookStoreFragmentDirections
+                    .actionBookStoreFragmentToBookDetailFragment(book.volumeId)
+                it.findNavController().navigate(action)
             }
         }
     }

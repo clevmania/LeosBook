@@ -47,7 +47,11 @@
         android:id="@+id/bookStoreFragment"
         android:name="com.clevmania.leosbook.ui.books.BookStoreFragment"
         android:label="book_store_fragment"
-        tools:layout="@layout/book_store_fragment" />
+        tools:layout="@layout/book_store_fragment" >
+        <action
+            android:id="@+id/action_bookStoreFragment_to_bookDetailFragment"
+            app:destination="@id/bookDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.clevmania.leosbook.ui.auth.SignUpFragment"
@@ -56,5 +60,14 @@
         <action
             android:id="@+id/action_signUpFragment_to_bookStoreFragment"
             app:destination="@id/bookStoreFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bookDetailFragment"
+        android:name="com.clevmania.leosbook.ui.books.detail.BookDetailFragment"
+        android:label="Book"
+        tools:layout="@layout/book_detail_fragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
     </fragment>
 </navigation>
