@@ -3,16 +3,20 @@ package com.clevmania.leosbook.ui.books.detail
 import android.os.Bundle
 import android.view.*
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.clevmania.leosbook.R
+import com.clevmania.leosbook.constants.Constants
+import com.clevmania.leosbook.data.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.ui.books.detail.model.BookDetailResponse
 import com.clevmania.leosbook.utils.BadgeUtils.convertLayoutToImage
 import com.clevmania.leosbook.utils.GlideApp
+import com.clevmania.leosbook.utils.InjectorUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.book_detail_fragment.*
 
@@ -27,10 +31,19 @@ class BookDetailFragment : TopLevelFragment() {
         fun newInstance() = BookDetailFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        viewModelFactory = InjectorUtils.provideBookDetailViewModelFactory(requireContext())
+        viewModel = ViewModelProvider(
+            this, viewModelFactory).get(BookDetailViewModel::class.java)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.book_detail_fragment, container, false)
     }
 
@@ -77,7 +90,7 @@ class BookDetailFragment : TopLevelFragment() {
             itemInCart.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
                     showSuccessDialog("Added To Cart", "Success")
-                    increaseCartCounter(cds)
+                    increaseCartCounter()
                 }
             })
         }
@@ -101,23 +114,23 @@ class BookDetailFragment : TopLevelFragment() {
     private fun addToCart(){
         val cartItem = Cart(bookInfo.id,bookInfo.volumeInfo.title,
             bookInfo.volumeInfo.imageLinks.medium,bookInfo.volumeInfo.pageCount,
-            1, FirebaseUtils.getUID())
+            Constants.BOOK_QUANTITY, FirebaseUtils.getUID()!!)
 
-        viewModel.addBookToCart(cds,cartItem)
+        viewModel.addBookToCart(cartItem)
     }
 
-//    override fun onOptionsItemSelected(item: MenuItem) =
-//        when (item.itemId) {
-//            R.id.action_cart -> {
-//                findNavController().navigate(R.id.action_bookDetailFragment_to_cartFragment)
-//                true
-//            }
-//            R.id.action_fav -> {
-//
-//                true
-//            }
-//            else -> false
-//        }
+    override fun onOptionsItemSelected(item: MenuItem) =
+        when (item.itemId) {
+            R.id.action_cart -> {
+                findNavController().navigate(R.id.action_bookDetailFragment_to_cartFragment)
+                true
+            }
+            R.id.action_fav -> {
+
+                true
+            }
+            else -> false
+        }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_book_detail, menu)
