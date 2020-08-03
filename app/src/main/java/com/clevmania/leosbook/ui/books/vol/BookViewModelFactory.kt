@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.ui.books
+package com.clevmania.leosbook.ui.books.vol
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

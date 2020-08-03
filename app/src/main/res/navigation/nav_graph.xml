@@ -45,7 +45,7 @@
     </fragment>
     <fragment
         android:id="@+id/bookStoreFragment"
-        android:name="com.clevmania.leosbook.ui.books.BookStoreFragment"
+        android:name="com.clevmania.leosbook.ui.books.vol.BookStoreFragment"
         android:label="book_store_fragment"
         tools:layout="@layout/book_store_fragment" >
         <action

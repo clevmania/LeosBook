@@ -7,7 +7,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
-import com.clevmania.leosbook.ui.books.BookStore
 import com.clevmania.leosbook.ui.books.BookStoreFragmentDirections
 import kotlinx.android.synthetic.main.item_book.view.*
 

@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.ui.books
+package com.clevmania.leosbook.ui.books.vol
 
 import com.clevmania.leosbook.ui.books.vol.model.BookVolumeResponse
 import retrofit2.http.GET

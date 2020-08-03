@@ -6,9 +6,9 @@ import com.clevmania.leosbook.BookStoreService
 import com.clevmania.leosbook.data.CartDao
 import com.clevmania.leosbook.data.CartDatabase
 import com.clevmania.leosbook.data.CartLocalDataSource
-import com.clevmania.leosbook.ui.books.BookStoreDataService
-import com.clevmania.leosbook.ui.books.BookStoreRepository
-import com.clevmania.leosbook.ui.books.BookViewModelFactory
+import com.clevmania.leosbook.ui.books.vol.BookStoreDataService
+import com.clevmania.leosbook.ui.books.vol.BookStoreRepository
+import com.clevmania.leosbook.ui.books.vol.BookViewModelFactory
 import com.clevmania.leosbook.ui.books.detail.BookDetailRepository
 import com.clevmania.leosbook.ui.books.detail.BookDetailService
 import com.clevmania.leosbook.ui.books.detail.BookDetailViewModelFactory
@@ -27,12 +27,16 @@ object InjectorUtils {
         return BookStoreService().create(cls)
     }
 
-    private fun provideBookStoreRepository(): BookStoreRepository{
-        return BookStoreRepository(provideBookService(BookStoreDataService::class.java))
+    private fun provideBookStoreRepository(): BookStoreRepository {
+        return BookStoreRepository(
+            provideBookService(BookStoreDataService::class.java)
+        )
     }
 
-    fun provideViewModelFactory(): BookViewModelFactory{
-        return BookViewModelFactory(provideBookStoreRepository())
+    fun provideViewModelFactory(): BookViewModelFactory {
+        return BookViewModelFactory(
+            provideBookStoreRepository()
+        )
     }
 
     private fun provideBookDetailRepository(): BookDetailRepository{

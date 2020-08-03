@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.ui.books
+package com.clevmania.leosbook.ui.books.vol
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,6 @@ import com.clevmania.leosbook.extension.afterTextChanged
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.GroundFragment
-import com.clevmania.leosbook.ui.books.vol.BookAdapter
 import com.clevmania.leosbook.utils.InjectorUtils
 import kotlinx.android.synthetic.main.book_store_fragment.*
 
@@ -22,7 +21,8 @@ class BookStoreFragment : GroundFragment() {
     private lateinit var adapter: BookAdapter
 
     companion object {
-        fun newInstance() = BookStoreFragment()
+        fun newInstance() =
+            BookStoreFragment()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
