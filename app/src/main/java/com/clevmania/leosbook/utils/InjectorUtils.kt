@@ -3,6 +3,7 @@ package com.clevmania.leosbook.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.clevmania.leosbook.BookStoreService
+import com.clevmania.leosbook.FWApiService
 import com.clevmania.leosbook.data.CartDao
 import com.clevmania.leosbook.data.CartDatabase
 import com.clevmania.leosbook.data.CartLocalDataSource
@@ -13,6 +14,9 @@ import com.clevmania.leosbook.ui.books.detail.BookDetailRepository
 import com.clevmania.leosbook.ui.books.detail.BookDetailService
 import com.clevmania.leosbook.ui.books.detail.BookDetailViewModelFactory
 import com.clevmania.leosbook.ui.cart.CartViewModelFactory
+import com.clevmania.leosbook.ui.integration.InlineViewModelFactory
+import com.clevmania.leosbook.ui.integration.TransactionRepository
+import com.clevmania.leosbook.ui.integration.TransactionVerificationService
 
 /**
  * @author by Lawrence on 8/1/20.
@@ -25,6 +29,10 @@ object InjectorUtils {
 
     private fun <T : Any>provideBookService(cls : Class<out T>): T{
         return BookStoreService().create(cls)
+    }
+
+    private fun <T : Any>provideFWService(cls : Class<out T>): T{
+        return FWApiService().create(cls)
     }
 
     private fun provideBookStoreRepository(): BookStoreRepository {
@@ -62,5 +70,13 @@ object InjectorUtils {
 
     fun provideCartViewModelFactory(context: Context): CartViewModelFactory {
         return CartViewModelFactory(provideCartDataSource(context))
+    }
+
+    fun provideFWInlineRepository(): TransactionRepository{
+        return TransactionRepository(provideFWService(TransactionVerificationService::class.java))
+    }
+
+    fun provideInlineViewModelFactory(): InlineViewModelFactory{
+        return InlineViewModelFactory(provideFWInlineRepository())
     }
 }
