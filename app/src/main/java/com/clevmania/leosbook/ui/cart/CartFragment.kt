@@ -30,7 +30,7 @@ class CartFragment : Fragment() {
     private var recyclerViewState : Parcelable? = null
     private lateinit var viewModel: CartViewModel
     private var costOfBooks : Double = 0.0
-    private val cartList = mutableListOf<Cart>()
+//    private val cartList = mutableListOf<Cart>()
 
     private var cartDelegate = object : CartEventListener{
         override fun onQuantityChanged(quantity: Int, bookId: String) {
@@ -81,8 +81,8 @@ class CartFragment : Fragment() {
         mbTotalPrice.setOnClickListener {
             FirebaseUtils.getUserDetails()?.addValueEventListener(userEventListener)
         }
-        viewModel.retrieveTotalCost()
-        rvCart.adapter = CartAdapter(cartList,cartDelegate)
+//        viewModel.retrieveTotalCost()
+//        rvCart.adapter = CartAdapter(cartList,cartDelegate)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -91,7 +91,9 @@ class CartFragment : Fragment() {
             allCartItems.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
                     if(it.isEmpty())mbTotalPrice.makeGone()
-                    cartList.addAll(it)
+//                    cartList.addAll(it)
+                    viewModel.retrieveTotalCost()
+                    rvCart.adapter = CartAdapter(it,cartDelegate)
                 }
             })
 
