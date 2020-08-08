@@ -39,6 +39,11 @@ class BookDetailFragment : TopLevelFragment() {
             this, viewModelFactory).get(BookDetailViewModel::class.java)
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.increaseCartCounter()
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
