@@ -17,11 +17,13 @@ import androidx.lifecycle.ViewModelProvider
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.AppKeys
 import com.clevmania.leosbook.constants.Constants
+import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.clevmania.leosbook.utils.UiUtils
 import kotlinx.android.synthetic.main.inline_fragment.*
 import org.json.JSONObject
+import kotlin.math.roundToInt
 
 class InlineFragment : TopLevelFragment() {
 
@@ -44,6 +46,17 @@ class InlineFragment : TopLevelFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.inline_fragment, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val name = arguments?.getString("userName")!!
+        val mail = arguments?.getString("userMail")!!
+        val mobile = arguments?.getString("userMobile")!!
+        val amount = arguments?.getDouble("totalCost")!!.roundToInt()
+
+        val byteData = initPaymentViaFlutterWaveInline(mail,mobile,name,amount).toByteArray()
+        loadWebView(byteData)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -72,7 +85,7 @@ class InlineFragment : TopLevelFragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadWebView(urlLink : String){
+    private fun loadWebView(data : ByteArray){
         wvFlutterInline.settings.javaScriptEnabled = true
         wvFlutterInline.settings.domStorageEnabled = true
         wvFlutterInline.settings.setSupportMultipleWindows(false)
@@ -87,17 +100,13 @@ class InlineFragment : TopLevelFragment() {
                 requireContext()
             ), "Android")
 
-        if(urlLink != "nolink"){
-            wvFlutterInline.loadUrl(urlLink)
-        }else{
-            val encodedHtml = Base64.encodeToString(
-                initPaymentViaFlutterWaveInline().toByteArray(), Base64.NO_PADDING)
-
-            wvFlutterInline.loadData(encodedHtml, "text/html", "base64")
-        }
+        val encodedHtml = Base64.encodeToString(data, Base64.NO_PADDING)
+        wvFlutterInline.loadData(encodedHtml, "text/html", "base64")
     }
 
-    private fun initPaymentViaFlutterWaveInline() : String{
+    // email, phone, name, amount
+
+    private fun initPaymentViaFlutterWaveInline(email : String, phone: String, name: String, amount : Int) : String{
         return """
             <!DOCTYPE html>
             <html>
@@ -109,7 +118,7 @@ class InlineFragment : TopLevelFragment() {
                         FlutterwaveCheckout({
                           public_key: "${AppKeys.PUBLIC_KEY}",
                           tx_ref: "${UiUtils.randomReferenceGenerator()}",
-                          amount: 33500,
+                          amount: $amount,
                           currency: "NGN",
                           payment_options: " ${PaymentOptions.card}, ${PaymentOptions.banktransfer}",
                           //redirect_url: // specified redirect URL
@@ -119,9 +128,9 @@ class InlineFragment : TopLevelFragment() {
                             consumer_mac: "92a3-912ba-1192a",
                           },
                           customer: {
-                            email: "user@gmail.com",
-                            phone_number: "08102909304",
-                            name: "yemi desola",
+                            email: "$email",
+                            phone_number: "$phone",
+                            name: "$name",
                           },
                           onclose: function() {
                             console.log("Flutter wave closePaymentPage");
