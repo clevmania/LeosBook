@@ -6,6 +6,7 @@ import android.net.http.SslError
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Base64
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import android.webkit.*
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.AppKeys
 import com.clevmania.leosbook.constants.Constants
@@ -104,8 +106,6 @@ class InlineFragment : TopLevelFragment() {
         wvFlutterInline.loadData(encodedHtml, "text/html", "base64")
     }
 
-    // email, phone, name, amount
-
     private fun initPaymentViaFlutterWaveInline(email : String, phone: String, name: String, amount : Int) : String{
         return """
             <!DOCTYPE html>
@@ -155,6 +155,10 @@ class InlineFragment : TopLevelFragment() {
         """
     }
 
+    private fun closePage(){
+        findNavController().popBackStack(R.id.bookStoreFragment,true)
+    }
+
     private fun verifyPayment(id : String){
         viewModel.verifyTransactionStatus(id)
     }
@@ -191,17 +195,17 @@ class InlineFragment : TopLevelFragment() {
 
         @JavascriptInterface
         fun verifyTransaction(data : String){
+            Log.i("transferRefInline",data)
             val responseObject = JSONObject(data)
             if (responseObject.has("transaction_id")) {
                 val id = responseObject.getString("transaction_id")
-                newInstance()
-                    .verifyPayment(id)
+                newInstance().verifyPayment(id)
             }
         }
 
         @JavascriptInterface
         fun closePaymentPage(){
-            Toast.makeText(ctx, "Close Fragment", Toast.LENGTH_SHORT).show()
+            newInstance().closePage()
         }
     }
 

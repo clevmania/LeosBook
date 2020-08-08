@@ -13,21 +13,19 @@ import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.User
-import com.clevmania.leosbook.extension.makeInVisible
 import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.checkout.model.request.BankTransferRequest
 import com.clevmania.leosbook.ui.checkout.model.request.UssdRequest
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_check_out.*
 
 class CheckOutFragment : BottomSheetDialogFragment() {
-    private lateinit var user : User
+    private lateinit var user: User
     private var amount: Double = 0.0
 
     private val bankList by lazy { Constants.getSupportedBanks() }
-    private lateinit var viewModel : CheckOutViewModel
+    private lateinit var viewModel: CheckOutViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +51,7 @@ class CheckOutFragment : BottomSheetDialogFragment() {
                 "userMail" to user.email,
                 "totalCost" to amount
             )
-            findNavController().navigate(R.id.inlineFragment,bundle)
+            findNavController().navigate(R.id.inlineFragment, bundle)
         }
 
         loadBanks()
@@ -63,8 +61,8 @@ class CheckOutFragment : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        with(viewModel){
-            progress.observe(viewLifecycleOwner, Observer {uiEvent ->
+        with(viewModel) {
+            progress.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
 //                    toggleBlockingProgress(it)
                 }
@@ -92,21 +90,22 @@ class CheckOutFragment : BottomSheetDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(user : User, amount : Double) = CheckOutFragment().apply {
+        fun newInstance(user: User, amount: Double) = CheckOutFragment().apply {
             this.user = user
             this.amount = amount
         }
     }
 
-    private val bankSelectionListener = object : AdapterView.OnItemSelectedListener{
+    private val bankSelectionListener = object : AdapterView.OnItemSelectedListener {
         override fun onNothingSelected(parent: AdapterView<*>?) {
 
         }
 
         override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-            if(position != 0){
+            if (position != 0) {
                 val bankCode = bankList[position].code
-                val request = UssdRequest(bankCode,amount.toString(),
+                val request = UssdRequest(
+                    bankCode, amount.toString(),
                     email = user.email, fullname = "${user.firstName} ${user.lastName}",
                     phone_number = user.mobile
                 )

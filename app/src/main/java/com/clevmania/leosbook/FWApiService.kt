@@ -23,7 +23,7 @@ interface FWApiService {
                 .addInterceptor(logging)
                 .addInterceptor {
                     val request = it.request().newBuilder()
-                        .addHeader("com.clevmania.leosbook.ui.checkout.model.response.Authorization","Bearer ${AppKeys.SECRET_KEY}")
+                        .addHeader("Authorization","Bearer ${AppKeys.SECRET_KEY}")
                         .build()
 
                     it.proceed(request = request)

@@ -4,8 +4,8 @@ import com.clevmania.leosbook.model.FWApiResponse
 import com.clevmania.leosbook.ui.checkout.model.request.BankTransferRequest
 import com.clevmania.leosbook.ui.checkout.model.request.UssdRequest
 import com.clevmania.leosbook.ui.checkout.model.response.Meta
-import com.clevmania.leosbook.ui.checkout.model.response.UssdResponse
 import com.clevmania.leosbook.ui.checkout.model.transfer.BankAuthorizationMeta
+import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -16,12 +16,12 @@ import retrofit2.http.Query
 interface UssdOrTransferService {
     @POST("v3/charges")
     suspend fun payWithUssd(
-        @Query("type") type: String, request : UssdRequest
+        @Query("type") type: String, @Body request : UssdRequest
     ): FWApiResponse<Meta>
 
     @POST("v3/charges?type=bank_transfer")
     suspend fun payWithBankTransfer(
-        request: BankTransferRequest
+       @Body request: BankTransferRequest
     ): FWApiResponse<BankAuthorizationMeta>
 }
 
