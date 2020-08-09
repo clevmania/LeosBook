@@ -134,12 +134,11 @@
     <View
         android:id="@+id/vBankTransferInfo"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/ussd_background"
-        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -150,7 +149,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="1100753480"
+        tools:text="1100753480"
         android:textSize="32sp"
         android:fontFamily="@font/source_sans_pro_bold"
         android:textColor="@color/colorBlack"
@@ -164,7 +163,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/source_sans_pro_regular"
-        android:text="GUARANTY TRUST BANK"
+        tools:text="GUARANTY TRUST BANK"
         android:textColor="@color/colorTextBody"
         app:layout_constraintEnd_toEndOf="@+id/vBankTransferInfo"
         app:layout_constraintStart_toStartOf="@+id/vBankTransferInfo"
@@ -177,7 +176,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/source_sans_pro_semi_bold"
-        android:text="\u20a67,500"
+        tools:text="\u20a67,500"
         android:textColor="@color/colorTextBody"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@+id/tvBankAccountNo"
@@ -193,11 +192,18 @@
         android:layout_marginEnd="8dp"
         android:fontFamily="@font/source_sans_pro_regular"
         android:gravity="center"
-        android:text="Pay into the account number above"
+        tools:text="Pay into the account number above"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="@+id/vBankTransferInfo"
         app:layout_constraintEnd_toEndOf="@+id/vBankTransferInfo"
         app:layout_constraintStart_toStartOf="@+id/vBankTransferInfo"
         app:layout_constraintTop_toBottomOf="@+id/tvAmountToPay" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grpBankTransferView"
+        app:constraint_referenced_ids="tvPaymentNote,
+        tvAmountToPay,tvBankAccountNo,tvBankName,vBankTransferInfo"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

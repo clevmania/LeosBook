@@ -93,7 +93,7 @@ class CheckOutFragment : TopLevelFragment() {
                     tvBankAccountNo.text = it.transfer_account
                     tvBankName.text = it.transfer_bank
                     tvPaymentNote.text = it.transfer_note
-                    vBankTransferInfo.makeVisible()
+                    grpBankTransferView.makeVisible()
                 }
             })
         }
@@ -112,10 +112,12 @@ class CheckOutFragment : TopLevelFragment() {
                     mbPayWithCard.makeVisible()
                     spSupportedBanks.makeGone()
                     clUssdPaymentInfo.makeGone()
+                    grpBankTransferView.makeGone()
                 }
                 R.id.rbUssd -> {
                     spSupportedBanks.makeVisible()
                     mbPayWithCard.makeGone()
+                    grpBankTransferView.makeGone()
                 }
             }
         }
