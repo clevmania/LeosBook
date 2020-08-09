@@ -27,7 +27,9 @@
         tools:layout="@layout/sign_in_fragment" >
         <action
             android:id="@+id/action_signInFragment_to_bookStoreFragment"
-            app:destination="@id/bookStoreFragment" />
+            app:destination="@id/bookStoreFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
@@ -77,13 +79,26 @@
         android:id="@+id/cartFragment"
         android:name="com.clevmania.leosbook.ui.cart.CartFragment"
         android:label="Cart"
-        tools:layout="@layout/cart_fragment" />
+        tools:layout="@layout/cart_fragment" >
+        <action
+            android:id="@+id/action_cartFragment_to_checkOutFragment"
+            app:destination="@id/checkOutFragment" />
+    </fragment>
     <fragment
         android:id="@+id/inlineFragment"
         android:name="com.clevmania.leosbook.ui.integration.InlineFragment"
-        android:label="inline_fragment"
+        android:label="Checkout"
         tools:layout="@layout/inline_fragment" />
     <argument
         android:name="userInfo"
         app:argType="com.clevmania.leosbook.data.User" />
+    <fragment
+        android:id="@+id/checkOutFragment"
+        android:name="com.clevmania.leosbook.ui.checkout.CheckOutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/fragment_check_out">
+        <action
+            android:id="@+id/action_checkOutFragment_to_inlineFragment"
+            app:destination="@id/inlineFragment" />
+    </fragment>
 </navigation>

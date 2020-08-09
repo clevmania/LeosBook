@@ -14,13 +14,14 @@ import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.extension.makeVisible
+import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.ui.checkout.model.request.BankTransferRequest
 import com.clevmania.leosbook.ui.checkout.model.request.UssdRequest
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_check_out.*
 
-class CheckOutFragment : BottomSheetDialogFragment() {
+class CheckOutFragment : TopLevelFragment() {
     private lateinit var user: User
     private var amount: Double = 0.0
 
@@ -32,6 +33,9 @@ class CheckOutFragment : BottomSheetDialogFragment() {
         viewModel = ViewModelProvider(this,
             InjectorUtils.provideUssdOrTransferViewModelFactory())
             .get(CheckOutViewModel::class.java)
+
+        user = this.requireArguments().getSerializable("userInfo") as User
+        amount = this.requireArguments().getDouble("amount")
     }
 
     override fun onCreateView(

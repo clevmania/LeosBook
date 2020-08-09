@@ -1,25 +1,21 @@
 package com.clevmania.leosbook.ui.cart
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
-import com.clevmania.leosbook.data.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.extension.makeGone
-import com.clevmania.leosbook.ui.checkout.CheckOutFragment
 import com.clevmania.leosbook.utils.InjectorUtils
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -27,14 +23,14 @@ import kotlinx.android.synthetic.main.cart_fragment.*
 
 class CartFragment : Fragment() {
 
-    private var recyclerViewState : Parcelable? = null
+    private var recyclerViewState: Parcelable? = null
     private lateinit var viewModel: CartViewModel
-    private var costOfBooks : Double = 0.0
+    private var costOfBooks: Double = 0.0
 //    private val cartList = mutableListOf<Cart>()
 
-    private var cartDelegate = object : CartEventListener{
+    private var cartDelegate = object : CartEventListener {
         override fun onQuantityChanged(quantity: Int, bookId: String) {
-            viewModel.updateBookQuantity(quantity,bookId)
+            viewModel.updateBookQuantity(quantity, bookId)
             recyclerViewState = rvCart.layoutManager?.onSaveInstanceState()
         }
 
@@ -48,12 +44,12 @@ class CartFragment : Fragment() {
 
     }
 
-    private var userEventListener = object : ValueEventListener{
+    private var userEventListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             val user = snapshot.getValue(User::class.java)
             user?.let {
-                CheckOutFragment.newInstance(it,costOfBooks)
-                    .show(childFragmentManager,"Checkout")
+                val bundle = bundleOf("userInfo" to it, "amount" to costOfBooks)
+                findNavController().navigate(R.id.action_cartFragment_to_checkOutFragment, bundle)
             }
         }
 
@@ -87,17 +83,17 @@ class CartFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        with(viewModel){
+        with(viewModel) {
             allCartItems.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    if(it.isEmpty())mbTotalPrice.makeGone()
+                    if (it.isEmpty()) mbTotalPrice.makeGone()
 //                    cartList.addAll(it)
                     viewModel.retrieveTotalCost()
-                    rvCart.adapter = CartAdapter(it,cartDelegate)
+                    rvCart.adapter = CartAdapter(it, cartDelegate)
                 }
             })
 
-            updatedQuantity.observe(viewLifecycleOwner, Observer { uiEvent->
+            updatedQuantity.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
                     rvCart.layoutManager?.onRestoreInstanceState(recyclerViewState)
                     viewModel.retrieveTotalCost()
