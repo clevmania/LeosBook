@@ -32,11 +32,12 @@
     <string name="product_page_title">Product Details</string>
     <string name="reviews_page_title">Reviews</string>
     <string name="none_available">N/A</string>
-    <string name="pay_now">PAY %s</string>
+    <string name="pay_now">PAY \u20a6%s</string>
     <string name="semi_bold">source_sans_pro_semi_bold</string>
     <string name="number_picker_formatter">%2d</string>
     <string name="processing">Processing…</string>
     <string name="last_name">Last name</string>
     <string name="first_name">First name</string>
+    <string name="dial_to_complete_your_transaction">Use the code above to complete your transaction</string>
 
 </resources>

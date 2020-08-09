@@ -4,8 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
+import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.User
+import com.clevmania.leosbook.extension.formatPrice
+import com.clevmania.leosbook.extension.makeGone
 import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.ui.checkout.model.request.BankTransferRequest
@@ -48,6 +49,7 @@ class CheckOutFragment : TopLevelFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mbPayWithCard.text = getString(R.string.pay_now,amount.toInt().toString())
         mbPayWithCard.setOnClickListener {
             val bundle = bundleOf(
                 "userName" to "${user.firstName} ${user.lastName}",
@@ -59,8 +61,8 @@ class CheckOutFragment : TopLevelFragment() {
         }
 
         loadBanks()
-        mbPayWithUssd.setOnClickListener { spSupportedBanks.makeVisible() }
-        mbBankTransfer.setOnClickListener { payViaBankTransfer() }
+        listener()
+//        radioCheckedChangeListener()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -68,27 +70,54 @@ class CheckOutFragment : TopLevelFragment() {
         with(viewModel) {
             progress.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-//                    toggleBlockingProgress(it)
+                    toggleBlockingProgress(it)
                 }
             })
 
             error.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-//                    showErrorDialog(it)
+                    showErrorDialog(it)
                 }
             })
 
             ussdMeta.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    // show meta info view
+                    tvDialCode.text = it.authorization.note
+                    clUssdPaymentInfo.makeVisible()
                 }
             })
 
             transferMeta.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    // show bank info view
+                    tvAmountToPay.text = it.transfer_amount.toString()
+                    tvBankAccountNo.text = it.transfer_account
+                    tvBankName.text = it.transfer_bank
+                    tvPaymentNote.text = it.transfer_note
+                    vBankTransferInfo.makeVisible()
                 }
             })
+        }
+    }
+
+    private fun listener(){
+        rgPaymentOptions.setOnCheckedChangeListener { group, checkedId ->
+            when(checkedId){
+                R.id.rbBankTransfer -> {
+                    payViaBankTransfer()
+                    mbPayWithCard.makeGone()
+                    clUssdPaymentInfo.makeGone()
+                    spSupportedBanks.makeGone()
+                }
+                R.id.rbCard -> {
+                    mbPayWithCard.makeVisible()
+                    spSupportedBanks.makeGone()
+                    clUssdPaymentInfo.makeGone()
+                }
+                R.id.rbUssd -> {
+                    spSupportedBanks.makeVisible()
+                    mbPayWithCard.makeGone()
+                }
+            }
         }
     }
 
