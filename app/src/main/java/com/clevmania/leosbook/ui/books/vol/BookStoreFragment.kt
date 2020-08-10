@@ -78,7 +78,7 @@ class BookStoreFragment : GroundFragment() {
                                 item.volumeInfo.imageLinks.smallThumbnail,
                                 "General",
                                 item.volumeInfo.authors ?: listOf("N/A"),
-                                item.volumeInfo.pageCount.formatPrice(),
+                                getString(R.string.price,item.volumeInfo.pageCount.formatPrice()),
                                 item.id
                             )
                         )
