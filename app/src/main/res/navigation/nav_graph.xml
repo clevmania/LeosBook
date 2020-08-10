@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_merchantFragment"
+            app:destination="@id/merchantFragment" />
     </fragment>
     <fragment
         android:id="@+id/onBoardFragment"
@@ -101,4 +104,9 @@
             android:id="@+id/action_checkOutFragment_to_inlineFragment"
             app:destination="@id/inlineFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/merchantFragment"
+        android:name="com.clevmania.leosbook.ui.merchant.MerchantFragment"
+        android:label="merchant_fragment"
+        tools:layout="@layout/merchant_fragment" />
 </navigation>

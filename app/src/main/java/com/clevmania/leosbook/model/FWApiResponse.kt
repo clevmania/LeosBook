@@ -8,3 +8,6 @@ import com.clevmania.leosbook.ui.checkout.model.response.Meta
  */
 data class FWApiResponse<out T>(val status : String?, val meta: T?,
                                 val message: String?, val data: T?)
+
+data class MerchantTransactions<out T>(val status : String?, //val meta: T?,
+                                          val message: String?, val data: T?)

@@ -35,9 +35,9 @@ class CheckOutViewModel(private val dataSource: UssdOrTransferDataSource) : View
             _progress.value = UiEventUtils(true)
             try {
                 val ussdMeta = dataSource.payWithUssd(request = request)
-                ussdMeta.meta?.let {
-                    _ussdMeta.value = UiEventUtils(it)
-                }
+//                ussdMeta.meta?.let {
+//                    _ussdMeta.value = UiEventUtils(it)
+//                }
             } catch (ex: Exception) {
                 _error.value = UiEventUtils(ex.toDefaultErrorMessage())
             } finally {
@@ -52,9 +52,9 @@ class CheckOutViewModel(private val dataSource: UssdOrTransferDataSource) : View
 
             try {
                 val meta = dataSource.payWithBankTransfer(request)
-                meta.meta?.let {
-                    _transferMeta.value = UiEventUtils(it)
-                }
+//                meta.meta?.let {
+//                    _transferMeta.value = UiEventUtils(it)
+//                }
             } catch (ex: Exception) {
                 _error.value = UiEventUtils(ex.toDefaultErrorMessage())
             } finally {

@@ -20,6 +20,9 @@ import com.clevmania.leosbook.ui.checkout.UssdOrTransferService
 import com.clevmania.leosbook.ui.integration.InlineViewModelFactory
 import com.clevmania.leosbook.ui.integration.TransactionRepository
 import com.clevmania.leosbook.ui.integration.TransactionVerificationService
+import com.clevmania.leosbook.ui.merchant.MerchantTransactionRepository
+import com.clevmania.leosbook.ui.merchant.MerchantViewModelFactory
+import com.clevmania.leosbook.ui.merchant.TransactionService
 
 /**
  * @author by Lawrence on 8/1/20.
@@ -89,6 +92,14 @@ object InjectorUtils {
 
     fun provideUssdOrTransferViewModelFactory(): CheckOutViewModelFactory{
         return CheckOutViewModelFactory(provideBankTransferRepository())
+    }
+
+    private fun provideMerchantRepository(): MerchantTransactionRepository{
+        return MerchantTransactionRepository(provideFWService(TransactionService::class.java))
+    }
+
+    fun provideMerchantViewModelFactory(): MerchantViewModelFactory{
+        return MerchantViewModelFactory(provideMerchantRepository())
     }
 
 }

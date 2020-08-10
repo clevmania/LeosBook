@@ -52,6 +52,8 @@ class SignInFragment : AuthFragment() {
         tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
+        tvMerchants.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_merchantFragment) }
     }
 
     private fun signUpUser() {
