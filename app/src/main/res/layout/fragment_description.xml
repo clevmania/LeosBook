@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:lineSpacingExtra="4dp"
         android:layout_margin="16dp"
-        android:text="@string/hello_blank_fragment" />
+        android:text="@string/n_a" />
 
 </ScrollView>

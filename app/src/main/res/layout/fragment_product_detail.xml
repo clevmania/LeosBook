@@ -5,10 +5,13 @@
     android:layout_height="match_parent"
     tools:context=".ui.books.detail.product.ProductDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/colorTextBody"
+        android:textSize="18sp"
+        android:fontFamily="@font/source_sans_pro_semi_bold"
+        android:text="@string/n_a" />
 
 </FrameLayout>

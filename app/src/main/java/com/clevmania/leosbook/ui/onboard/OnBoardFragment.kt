@@ -1,7 +1,6 @@
 package com.clevmania.leosbook.ui.onboard
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,13 +75,13 @@ class OnBoardFragment : AuthFragment() {
     private fun loadSlider(){
         val sliderList =  listOf(
             SliderList(getString(R.string.find_books),
-                getString(R.string.find_book_body), R.drawable.img_leo),
+                getString(R.string.find_book_body), R.drawable.img_find_books),
             SliderList(getString(R.string.seamless_payment),
-                getString(R.string.seamless_payment_body), R.drawable.img_leo),
+                getString(R.string.seamless_payment_body), R.drawable.img_make_payment),
             SliderList(getString(R.string.view_transactions),
-                getString(R.string.view_transactions_body), R.drawable.img_leo),
+                getString(R.string.view_transactions_body), R.drawable.img_view_transactions),
             SliderList(getString(R.string.refunds),
-                getString(R.string.refund_customers_body), R.drawable.img_leo)
+                getString(R.string.refund_customers_body), R.drawable.img_refund)
         )
 
         sliderAdapter = OnBoardAdapter(sliderList)

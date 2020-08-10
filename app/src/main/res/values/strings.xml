@@ -24,8 +24,6 @@
     <string name="start_screen">Start</string>
     <string name="title_api_error">Something Went Wrong</string>
     <string name="title_api_success">Congratulations</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="shopping_cart">Cart</string>
     <string name="fav_books">Favourite</string>
     <string name="description_page_title">Description</string>
@@ -43,5 +41,6 @@
     <string name="u20a68_500">₦8,500</string>
     <string name="update_profile">Update Profile</string>
     <string name="create_update_profile">ProfileUpdate</string>
+    <string name="n_a">N/A</string>
 
 </resources>
