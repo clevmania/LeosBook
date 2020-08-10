@@ -31,6 +31,7 @@ class CartFragment : TopLevelFragment() {
     private var costOfBooks: Double = 0.0
     private val cartList = arrayListOf<Cart>()
     private lateinit var adapter: CartAdapter
+    private var removeIndex : Int? = null
 
     private var cartDelegate = object : CartEventListener {
         override fun onQuantityChanged(quantity: Int, bookId: String) {
@@ -38,8 +39,9 @@ class CartFragment : TopLevelFragment() {
             recyclerViewState = rvCart.layoutManager?.onSaveInstanceState()
         }
 
-        override fun onRemoveItemClicked(id: String) {
-            TODO("Not yet implemented")
+        override fun onRemoveItemClicked(cart: Cart) {
+            viewModel.deleteCartItem(cart)
+            removeIndex = cartList.indexOf(cart)
         }
 
         override fun onSelectFavourite() {
@@ -111,6 +113,16 @@ class CartFragment : TopLevelFragment() {
                 uiEvent.getContentIfNotHandled()?.let {
                     costOfBooks = it * 20
                     mbTotalPrice.text = getString(R.string.pay_now, it.toInt().formatPrice())
+                }
+            })
+
+            deletedCartItem.observe(viewLifecycleOwner, Observer {uiEvent->
+                uiEvent.getContentIfNotHandled()?.let {
+                    removeIndex?.let {
+                        cartList.removeAt(it)
+                        adapter.notifyItemRemoved(it)
+                        viewModel.retrieveTotalCost()
+                    }
                 }
             })
         }

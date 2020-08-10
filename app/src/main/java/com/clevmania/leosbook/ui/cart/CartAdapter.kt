@@ -42,11 +42,10 @@ class CartAdapter(private val cartList : List<Cart>, private val delegate : Cart
 //            itemView.tvBookAuthor.text = cartItem.bookAuthor
             itemView.tvBookPrice.text = cartItem.bookPrice.formatPrice()
             itemView.tvBookTitle.text = cartItem.bookName
-//            itemView.npQuantityPicker.value = cartItem.bookQuantity
-//
-//            itemView.npQuantityPicker.setOnValueChangedListener { _, _, newVal ->
-//                delegate.onQuantityChanged(newVal,cartItem.bookId)
-//            }
+
+            itemView.ivDelete.setOnClickListener {
+                delegate.onRemoveItemClicked(cartItem)
+            }
 
             itemView.npQuantityPicker.apply {
                 value = cartItem.bookQuantity
@@ -64,6 +63,6 @@ class CartAdapter(private val cartList : List<Cart>, private val delegate : Cart
 
 interface CartEventListener{
     fun onQuantityChanged(quantity : Int, bookId: String)
-    fun onRemoveItemClicked(id: String)
+    fun onRemoveItemClicked(cart: Cart)
     fun onSelectFavourite()
 }

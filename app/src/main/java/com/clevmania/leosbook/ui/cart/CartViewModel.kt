@@ -30,6 +30,9 @@ class CartViewModel(private val cds: CartLocalDataSource) : ViewModel() {
     private val _totalCost = MutableLiveData<UiEventUtils<Double>>()
     val totalCost : LiveData<UiEventUtils<Double>> = _totalCost
 
+    private val _deleteItem = MutableLiveData<UiEventUtils<Int>>()
+    val deletedCartItem : LiveData<UiEventUtils<Int>> = _deleteItem
+
     init { retrieveItemsInCart() }
 
     private fun retrieveItemsInCart(){
@@ -79,4 +82,19 @@ class CartViewModel(private val cds: CartLocalDataSource) : ViewModel() {
             }
         }
     }
+
+    fun deleteCartItem(cartItem : Cart){
+        viewModelScope.launch {
+            _progress.value = UiEventUtils(true)
+            try {
+                val itemDeleted = cds.deleteCartItem(cartItem)
+                _deleteItem.value = UiEventUtils(itemDeleted)
+            }catch (ex : Exception){
+                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
+            }finally {
+                _progress.value = UiEventUtils(false)
+            }
+        }
+    }
+
 }
