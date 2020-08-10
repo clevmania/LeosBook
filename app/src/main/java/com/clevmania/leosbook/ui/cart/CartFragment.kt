@@ -2,6 +2,7 @@ package com.clevmania.leosbook.ui.cart
 
 import android.os.Bundle
 import android.os.Parcelable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,9 +17,11 @@ import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.extension.makeGone
+import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.GroundFragment
 import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.utils.InjectorUtils
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -96,7 +99,10 @@ class CartFragment : TopLevelFragment() {
         with(viewModel) {
             allCartItems.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    if (it.isEmpty()) mbTotalPrice.makeGone()
+                    if (it.isEmpty()) {
+                        mbTotalPrice.makeGone()
+                        ivEmptyCart.makeVisible()
+                    }
                     cartList.addAll(it)
                     adapter.notifyDataSetChanged()
                 }
@@ -122,6 +128,10 @@ class CartFragment : TopLevelFragment() {
                         cartList.removeAt(it)
                         adapter.notifyItemRemoved(it)
                         viewModel.retrieveTotalCost()
+                        if(cartList.isEmpty()){
+                            ivEmptyCart.makeVisible()
+                            mbTotalPrice.makeGone()
+                        }
                     }
                 }
             })

@@ -118,7 +118,8 @@ class BookDetailFragment : TopLevelFragment() {
 
     private fun addToCart(){
         val cartItem = Cart(bookInfo.id,bookInfo.volumeInfo.title,
-            bookInfo.volumeInfo.imageLinks.medium,bookInfo.volumeInfo.pageCount,
+            bookInfo.volumeInfo.imageLinks.thumbnail
+            ,bookInfo.volumeInfo.pageCount,
             Constants.BOOK_QUANTITY, FirebaseUtils.getUID()!!)
 
         viewModel.addBookToCart(cartItem)
