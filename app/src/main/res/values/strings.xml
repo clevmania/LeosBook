@@ -41,5 +41,7 @@
     <string name="first_name">First name</string>
     <string name="dial_to_complete_your_transaction">Use the code above to complete your transaction</string>
     <string name="u20a68_500">₦8,500</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="create_update_profile">ProfileUpdate</string>
 
 </resources>

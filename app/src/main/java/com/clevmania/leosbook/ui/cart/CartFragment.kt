@@ -20,6 +20,7 @@ import com.clevmania.leosbook.extension.makeGone
 import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.GroundFragment
 import com.clevmania.leosbook.ui.TopLevelFragment
+import com.clevmania.leosbook.ui.profile.ProfileFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -55,10 +56,13 @@ class CartFragment : TopLevelFragment() {
 
     private var userEventListener = object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
-            val user = snapshot.getValue(User::class.java)
             toggleBlockingProgress(false)
-            user?.let {
-                val bundle = bundleOf("userInfo" to it, "amount" to costOfBooks)
+            val user = snapshot.getValue(User::class.java)
+            if(user == null){
+                ProfileFragment.newInstance(costOfBooks)
+                    .show(childFragmentManager,getString(R.string.create_update_profile))
+            }else{
+                val bundle = bundleOf("userInfo" to user, "amount" to costOfBooks)
                 findNavController().navigate(R.id.action_cartFragment_to_checkOutFragment, bundle)
             }
         }
