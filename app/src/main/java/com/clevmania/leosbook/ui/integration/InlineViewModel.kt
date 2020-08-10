@@ -4,12 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.clevmania.leosbook.data.CartLocalDataSource
 import com.clevmania.leosbook.extension.toDefaultErrorMessage
 import com.clevmania.leosbook.ui.integration.model.FWTransactionResponse
 import com.clevmania.leosbook.utils.UiEventUtils
 import kotlinx.coroutines.launch
 
-class InlineViewModel(private val dataSource : TransactionDataSource) : ViewModel() {
+class InlineViewModel(
+    private val dataSource : TransactionDataSource,
+    private val cds: CartLocalDataSource
+) : ViewModel() {
 
     private val _progress = MutableLiveData<UiEventUtils<Boolean>>()
     val progress : LiveData<UiEventUtils<Boolean>> = _progress
@@ -29,6 +33,20 @@ class InlineViewModel(private val dataSource : TransactionDataSource) : ViewMode
                 transactionStatus.data?.let {
                     _verificationResponse.value = UiEventUtils(it)
                 }
+            }catch (ex: Exception){
+                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
+            }finally {
+                _progress.value = UiEventUtils(false)
+            }
+        }
+    }
+
+    fun clearCart(uid: String){
+        viewModelScope.launch {
+            _progress.value = UiEventUtils(true)
+            try {
+                val resp = cds.clearCart(uid)
+
             }catch (ex: Exception){
                 _error.value = UiEventUtils(ex.toDefaultErrorMessage())
             }finally {

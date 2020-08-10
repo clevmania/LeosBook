@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.AppKeys
 import com.clevmania.leosbook.constants.Constants
+import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.clevmania.leosbook.utils.UiUtils
@@ -34,7 +35,7 @@ class InlineFragment : TopLevelFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModelFactory = InjectorUtils.provideInlineViewModelFactory()
+        viewModelFactory = InjectorUtils.provideInlineViewModelFactory(requireContext())
         viewModel = ViewModelProvider(this, viewModelFactory).get(InlineViewModel::class.java)
     }
 
@@ -75,6 +76,7 @@ class InlineFragment : TopLevelFragment() {
                 uiEvent.getContentIfNotHandled()?.let {
                     if (it.status == Constants.API_TRANSACTION_SUCCESS) {
                         showSuccessDialog("Transaction Successful")
+                        FirebaseUtils.getUID()?.let { uid -> clearCart(uid) }
                     }
                 }
             })
@@ -114,7 +116,7 @@ class InlineFragment : TopLevelFragment() {
                           tx_ref: "${UiUtils.randomReferenceGenerator()}",
                           amount: $amount,
                           currency: "NGN",
-                          payment_options: " ${PaymentOptions.card}, ${PaymentOptions.banktransfer}",
+                          payment_options: " ${PaymentOptions.card},${PaymentOptions.banktransfer}, ${PaymentOptions.ussd}",
                           //redirect_url: // specified redirect URL
                             //"https://callbacks.piedpiper.com/flutterwave.aspx?ismobile=34",
                           meta: {

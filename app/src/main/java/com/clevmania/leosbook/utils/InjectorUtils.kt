@@ -82,8 +82,8 @@ object InjectorUtils {
         return TransactionRepository(provideFWService(TransactionVerificationService::class.java))
     }
 
-    fun provideInlineViewModelFactory(): InlineViewModelFactory{
-        return InlineViewModelFactory(provideFWInlineRepository())
+    fun provideInlineViewModelFactory(context: Context): InlineViewModelFactory{
+        return InlineViewModelFactory(provideFWInlineRepository(), provideCartDataSource(context))
     }
 
     private fun provideBankTransferRepository(): UssdOrTransferRepository{
