@@ -14,9 +14,15 @@ import com.clevmania.leosbook.ui.books.detail.BookDetailRepository
 import com.clevmania.leosbook.ui.books.detail.BookDetailService
 import com.clevmania.leosbook.ui.books.detail.BookDetailViewModelFactory
 import com.clevmania.leosbook.ui.cart.CartViewModelFactory
+import com.clevmania.leosbook.ui.checkout.CheckOutViewModelFactory
+import com.clevmania.leosbook.ui.checkout.UssdOrTransferRepository
+import com.clevmania.leosbook.ui.checkout.UssdOrTransferService
 import com.clevmania.leosbook.ui.integration.InlineViewModelFactory
 import com.clevmania.leosbook.ui.integration.TransactionRepository
 import com.clevmania.leosbook.ui.integration.TransactionVerificationService
+import com.clevmania.leosbook.ui.merchant.MerchantTransactionRepository
+import com.clevmania.leosbook.ui.merchant.MerchantViewModelFactory
+import com.clevmania.leosbook.ui.merchant.TransactionService
 
 /**
  * @author by Lawrence on 8/1/20.
@@ -64,7 +70,7 @@ object InjectorUtils {
         return provideDatabase(context).cartDao()
     }
 
-    fun provideCartDataSource(context: Context): CartLocalDataSource {
+    private fun provideCartDataSource(context: Context): CartLocalDataSource {
         return CartLocalDataSource(provideDao(context))
     }
 
@@ -72,11 +78,28 @@ object InjectorUtils {
         return CartViewModelFactory(provideCartDataSource(context))
     }
 
-    fun provideFWInlineRepository(): TransactionRepository{
+    private fun provideFWInlineRepository(): TransactionRepository{
         return TransactionRepository(provideFWService(TransactionVerificationService::class.java))
     }
 
     fun provideInlineViewModelFactory(): InlineViewModelFactory{
         return InlineViewModelFactory(provideFWInlineRepository())
     }
+
+    private fun provideBankTransferRepository(): UssdOrTransferRepository{
+        return UssdOrTransferRepository(provideFWService(UssdOrTransferService::class.java))
+    }
+
+    fun provideUssdOrTransferViewModelFactory(): CheckOutViewModelFactory{
+        return CheckOutViewModelFactory(provideBankTransferRepository())
+    }
+
+    private fun provideMerchantRepository(): MerchantTransactionRepository{
+        return MerchantTransactionRepository(provideFWService(TransactionService::class.java))
+    }
+
+    fun provideMerchantViewModelFactory(): MerchantViewModelFactory{
+        return MerchantViewModelFactory(provideMerchantRepository())
+    }
+
 }

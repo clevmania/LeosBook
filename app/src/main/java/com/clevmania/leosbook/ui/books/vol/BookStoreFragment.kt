@@ -31,6 +31,7 @@ class BookStoreFragment : GroundFragment() {
         viewModelFactory = InjectorUtils.provideViewModelFactory()
         bookViewModel =
             ViewModelProvider(this, viewModelFactory).get(BookStoreViewModel::class.java)
+        adapter = BookAdapter(bookStore)
     }
 
     override fun onCreateView(
@@ -46,7 +47,7 @@ class BookStoreFragment : GroundFragment() {
         btnRomance.setOnClickListener { bookViewModel.getBooks(btnRomance.text.toString()) }
         btnSciFi.setOnClickListener { bookViewModel.getBooks(btnSciFi.text.toString()) }
         btnHistory.apply { setOnClickListener { bookViewModel.getBooks(text.toString()) } }
-        adapter = BookAdapter(bookStore)
+
         rvBookList.adapter = adapter
         searchBooks()
         grpBookStore.makeVisible()
@@ -69,7 +70,7 @@ class BookStoreFragment : GroundFragment() {
 
             bookResponse.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    if (bookStore.isNotEmpty()) bookStore.clear()
+                    bookStore.clear()
                     it.items.forEach { item ->
                         bookStore.add(
                             BookStore(
@@ -77,7 +78,7 @@ class BookStoreFragment : GroundFragment() {
                                 item.volumeInfo.imageLinks.smallThumbnail,
                                 "General",
                                 item.volumeInfo.authors ?: listOf("N/A"),
-                                item.volumeInfo.pageCount.formatPrice(),
+                                getString(R.string.price,item.volumeInfo.pageCount.formatPrice()),
                                 item.id
                             )
                         )

@@ -52,15 +52,17 @@ class SignInFragment : AuthFragment() {
         tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
+        tvMerchants.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_merchantFragment) }
     }
 
     private fun signUpUser() {
-        toggleBlockingProgress(true)
         try {
             val email = tilEmail.validate(ValidationType.EMAIL, getString(R.string.email))
             val password = tilPassword.validate(
                 ValidationType.PASSWORD, getString(R.string.password)
             )
+            toggleBlockingProgress(true)
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

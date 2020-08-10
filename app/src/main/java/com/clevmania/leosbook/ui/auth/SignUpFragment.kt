@@ -39,12 +39,12 @@ class SignUpFragment : AuthFragment() {
 
     private fun signUserUp(){
         try {
-            toggleBlockingProgress(true)
             val firstName = tilFirstName.validate(ValidationType.NAME, getString(R.string.first_name))
             val lastName = tilLastName.validate(ValidationType.NAME, getString(R.string.last_name))
             val email = tilEmail.validate(ValidationType.EMAIL,getString(R.string.email))
             val mobile = tilMobile.validate(ValidationType.PHONE, getString(R.string.mobile))
             val password = tilPassword.validate(ValidationType.PASSWORD, getString(R.string.password))
+            toggleBlockingProgress(true)
 
             auth.createUserWithEmailAndPassword(email,password)
                 .addOnCompleteListener {task ->

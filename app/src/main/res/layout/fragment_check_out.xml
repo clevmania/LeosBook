@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.checkout.CheckOutFragment">
 
@@ -19,44 +19,191 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbPayWithCard"
+    <RadioGroup
+        android:id="@+id/rgPaymentOptions"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
-        android:text="Pay With Card"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvPaymentOption" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPaymentOption">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbPayWithUssd"
-        android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="16dp"
-        android:text="USSD"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mbPayWithCard" />
+        <RadioButton
+            android:id="@+id/rbCard"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/radio_border"
+            android:button="@drawable/radio_state"
+            android:fontFamily="@font/source_sans_pro_semi_bold"
+            android:padding="16dp"
+            android:text="Card"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/mbBankTransfer"
+            app:layout_constraintStart_toStartOf="@+id/mbBankTransfer"
+            app:layout_constraintTop_toBottomOf="@+id/mbBankTransfer" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/mbBankTransfer"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/mbPayWithCard"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:text="Pay \u20a65000"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPaymentOption" />
+
+        <RadioButton
+            android:id="@+id/rbUssd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radio_border"
+            android:button="@drawable/radio_state"
+            android:fontFamily="@font/source_sans_pro_semi_bold"
+            android:padding="16dp"
+            android:text="USSD"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/rbCard"
+            app:layout_constraintStart_toStartOf="@+id/rbCard"
+            app:layout_constraintTop_toBottomOf="@+id/rbCard" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spSupportedBanks"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mbPayWithUssd" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clUssdPaymentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/ussd_background"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvDialCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="*737#"
+                android:textColor="@color/colorBlack"
+                android:textSize="32sp"
+                android:fontFamily="@font/source_sans_pro_semi_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvDialInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:textColor="@color/colorTextBody"
+                android:fontFamily="@font/source_sans_pro_regular"
+                android:text="@string/dial_to_complete_your_transaction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDialCode" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RadioButton
+            android:id="@+id/rbBankTransfer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radio_border"
+            android:button="@drawable/radio_state"
+            android:fontFamily="@font/source_sans_pro_semi_bold"
+            android:padding="16dp"
+            android:text="Bank Transfer"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="@+id/rbUssd"
+            app:layout_constraintStart_toStartOf="@+id/rbUssd"
+            app:layout_constraintTop_toBottomOf="@+id/rbUssd" />
+    </RadioGroup>
+
+    <View
+        android:id="@+id/vBankTransferInfo"
         android:layout_width="0dp"
-        android:layout_height="55dp"
+        android:layout_height="150dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="24dp"
-        android:layout_marginBottom="24dp"
-        android:text="Bank Transfer"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/ussd_background"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mbPayWithUssd" />
+        app:layout_constraintTop_toBottomOf="@+id/rgPaymentOptions" />
+
+    <TextView
+        android:id="@+id/tvBankAccountNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="1100753480"
+        android:textSize="32sp"
+        android:fontFamily="@font/source_sans_pro_bold"
+        android:textColor="@color/colorBlack"
+        app:layout_constraintEnd_toEndOf="@+id/vBankTransferInfo"
+        app:layout_constraintStart_toStartOf="@+id/vBankTransferInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvBankName" />
+
+    <TextView
+        android:id="@+id/tvBankName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/source_sans_pro_regular"
+        tools:text="GUARANTY TRUST BANK"
+        android:textColor="@color/colorTextBody"
+        app:layout_constraintEnd_toEndOf="@+id/vBankTransferInfo"
+        app:layout_constraintStart_toStartOf="@+id/vBankTransferInfo"
+        app:layout_constraintTop_toTopOf="@+id/vBankTransferInfo" />
+
+    <TextView
+        android:id="@+id/tvAmountToPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/source_sans_pro_semi_bold"
+        tools:text="\u20a67,500"
+        android:textColor="@color/colorTextBody"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/tvBankAccountNo"
+        app:layout_constraintStart_toStartOf="@+id/tvBankAccountNo"
+        app:layout_constraintTop_toBottomOf="@+id/tvBankAccountNo" />
+
+    <TextView
+        android:id="@+id/tvPaymentNote"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/source_sans_pro_regular"
+        android:gravity="center"
+        tools:text="Pay into the account number above"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/vBankTransferInfo"
+        app:layout_constraintStart_toStartOf="@+id/vBankTransferInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvAmountToPay" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grpBankTransferView"
+        app:constraint_referenced_ids="tvPaymentNote,
+        tvAmountToPay,tvBankAccountNo,tvBankName,vBankTransferInfo"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

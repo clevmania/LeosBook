@@ -104,7 +104,7 @@ class BookDetailFragment : TopLevelFragment() {
     private fun populateView(it: BookDetailResponse) {
         bookInfo = it
         tvBookTitle.text = it.volumeInfo.title
-        tvBookPrice.text = it.volumeInfo.pageCount.formatPrice()
+        tvBookPrice.text = getString(R.string.price,it.volumeInfo.pageCount.formatPrice())
         tvBookAuthor.text = it.volumeInfo.authors.toString()
         rbBooksRating.rating = it.volumeInfo.ratingsCount.toFloat()
         GlideApp.with(requireView())

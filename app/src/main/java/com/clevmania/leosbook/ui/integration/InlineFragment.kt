@@ -1,29 +1,26 @@
 package com.clevmania.leosbook.ui.integration
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.net.http.SslError
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Base64
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
-import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.AppKeys
 import com.clevmania.leosbook.constants.Constants
-import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.ui.TopLevelFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.clevmania.leosbook.utils.UiUtils
 import kotlinx.android.synthetic.main.inline_fragment.*
 import org.json.JSONObject
 import kotlin.math.roundToInt
+
 
 class InlineFragment : TopLevelFragment() {
 
@@ -55,14 +52,14 @@ class InlineFragment : TopLevelFragment() {
         val mobile = arguments?.getString("userMobile")!!
         val amount = arguments?.getDouble("totalCost")!!.roundToInt()
 
-        val byteData = initPaymentViaFlutterWaveInline(mail,mobile,name,amount).toByteArray()
+        val byteData = initPaymentViaFlutterWaveInline(mail, mobile, name, amount).toByteArray()
         loadWebView(byteData)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        with(viewModel){
-            progress.observe(viewLifecycleOwner, Observer {uiEvent ->
+        with(viewModel) {
+            progress.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
                     toggleBlockingProgress(it)
                 }
@@ -76,7 +73,7 @@ class InlineFragment : TopLevelFragment() {
 
             verificationResponse.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    if(it.status == Constants.API_TRANSACTION_SUCCESS){
+                    if (it.status == Constants.API_TRANSACTION_SUCCESS) {
                         showSuccessDialog("Transaction Successful")
                     }
                 }
@@ -85,7 +82,7 @@ class InlineFragment : TopLevelFragment() {
     }
 
     @SuppressLint("SetJavaScriptEnabled")
-    private fun loadWebView(data : ByteArray){
+    private fun loadWebView(data: ByteArray) {
         wvFlutterInline.settings.javaScriptEnabled = true
         wvFlutterInline.settings.domStorageEnabled = true
         wvFlutterInline.settings.setSupportMultipleWindows(false)
@@ -96,15 +93,12 @@ class InlineFragment : TopLevelFragment() {
         wvFlutterInline.setLayerType(View.LAYER_TYPE_SOFTWARE, null)
 //        wvFlutterInline.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorPrimary))
         wvFlutterInline.addJavascriptInterface(
-            WebPaymentCallbackInterface(
-                requireContext()
-            ), "Android")
+            WebPaymentCallbackInterface(this), "Android"
+        )
 
         val encodedHtml = Base64.encodeToString(data, Base64.NO_PADDING)
         wvFlutterInline.loadData(encodedHtml, "text/html", "base64")
     }
-
-    // email, phone, name, amount
 
     private fun initPaymentViaFlutterWaveInline(email : String, phone: String, name: String, amount : Int) : String{
         return """
@@ -155,11 +149,15 @@ class InlineFragment : TopLevelFragment() {
         """
     }
 
-    private fun verifyPayment(id : String){
+    private fun closePage() {
+        findNavController().popBackStack(R.id.bookStoreFragment, false)
+    }
+
+    private fun verifyPayment(id: String) {
         viewModel.verifyTransactionStatus(id)
     }
 
-    private fun declareWebViewClient() : WebViewClient {
+    private fun declareWebViewClient(): WebViewClient {
         return object : WebViewClient() {
             override fun onReceivedHttpError(
                 view: WebView?,
@@ -187,21 +185,20 @@ class InlineFragment : TopLevelFragment() {
         }
     }
 
-    class WebPaymentCallbackInterface(private val ctx : Context){
+    class WebPaymentCallbackInterface(private val ctx: InlineFragment) {
 
         @JavascriptInterface
-        fun verifyTransaction(data : String){
+        fun verifyTransaction(data: String) {
             val responseObject = JSONObject(data)
             if (responseObject.has("transaction_id")) {
                 val id = responseObject.getString("transaction_id")
-                newInstance()
-                    .verifyPayment(id)
+                ctx.verifyPayment(id)
             }
         }
 
         @JavascriptInterface
-        fun closePaymentPage(){
-            Toast.makeText(ctx, "Close Fragment", Toast.LENGTH_SHORT).show()
+        fun closePaymentPage() {
+            ctx.closePage()
         }
     }
 

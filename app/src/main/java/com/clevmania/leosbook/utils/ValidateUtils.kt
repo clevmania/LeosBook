@@ -77,6 +77,6 @@ fun TextInputLayout.validate(validationType: ValidationType,
 }
 
 private fun isValidEmail(email: String): Boolean {
-    return !TextUtils.isEmpty(email)
+    return email.isNotEmpty()
             && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

@@ -18,7 +18,7 @@ fun View.makeGone(){ this.visibility = GONE}
 fun View.makeInVisible() { this.visibility = View.INVISIBLE}
 
 fun Int.formatPrice(): String{
-    return "NGN ${this * 20}"
+    return "${this * 20}"
 }
 
 fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {

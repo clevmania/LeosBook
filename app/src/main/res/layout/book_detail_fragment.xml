@@ -110,7 +110,7 @@
             android:layout_height="wrap_content"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabIndicator="@drawable/ic_tab_divider"
-            app:tabIndicatorColor="@color/colorTextBody"
+            app:tabIndicatorColor="@color/colorDivider"
             app:tabSelectedTextColor="@color/colorTextBody"
             app:tabRippleColor="@android:color/transparent"
             app:tabTextColor="@color/colorTabText"/>
@@ -132,7 +132,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/colorBlack"
+        android:backgroundTint="@color/colorPrimaryButton"
         android:text="ADD TO CART"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"

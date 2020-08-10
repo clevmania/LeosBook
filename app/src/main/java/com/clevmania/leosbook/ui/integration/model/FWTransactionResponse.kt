@@ -3,8 +3,8 @@ package com.clevmania.leosbook.ui.integration.model
 data class FWTransactionResponse(
     val account_id: Int,
     val amount: Int,
-    val amount_settled: Int,
-    val app_fee: Int,
+    val amount_settled: Double,
+    val app_fee: Double,
     val auth_model: String,
     val card: Card?,
     val charged_amount: Int,
