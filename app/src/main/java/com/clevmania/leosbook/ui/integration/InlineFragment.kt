@@ -15,7 +15,7 @@ import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.AppKeys
 import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.FirebaseUtils
-import com.clevmania.leosbook.ui.TopLevelFragment
+import com.clevmania.leosbook.ui.base.TopLevelFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import com.clevmania.leosbook.utils.UiUtils
 import kotlinx.android.synthetic.main.inline_fragment.*

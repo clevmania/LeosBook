@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.extension.toDefaultErrorMessage
-import com.clevmania.leosbook.ui.AuthFragment
+import com.clevmania.leosbook.ui.base.AuthFragment
 import com.clevmania.leosbook.utils.ValidationException
 import com.clevmania.leosbook.utils.ValidationType
 import com.clevmania.leosbook.utils.validate

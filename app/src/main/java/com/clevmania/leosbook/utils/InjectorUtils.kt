@@ -2,8 +2,8 @@ package com.clevmania.leosbook.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.clevmania.leosbook.BookStoreService
-import com.clevmania.leosbook.FWApiService
+import com.clevmania.leosbook.api.BookStoreService
+import com.clevmania.leosbook.api.FWApiService
 import com.clevmania.leosbook.data.CartDao
 import com.clevmania.leosbook.data.CartDatabase
 import com.clevmania.leosbook.data.CartLocalDataSource

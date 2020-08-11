@@ -19,7 +19,7 @@ import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.formatPrice
-import com.clevmania.leosbook.ui.TopLevelFragment
+import com.clevmania.leosbook.ui.base.TopLevelFragment
 import com.clevmania.leosbook.ui.books.detail.model.BookDetailResponse
 import com.clevmania.leosbook.utils.BadgeUtils.convertLayoutToImage
 import com.clevmania.leosbook.utils.GlideApp

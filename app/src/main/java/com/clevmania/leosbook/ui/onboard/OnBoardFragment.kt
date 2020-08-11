@@ -9,7 +9,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.makeGone
 import com.clevmania.leosbook.extension.makeVisible
-import com.clevmania.leosbook.ui.AuthFragment
+import com.clevmania.leosbook.ui.base.AuthFragment
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_on_board.*
 

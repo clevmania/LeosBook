@@ -10,7 +10,7 @@ import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.afterTextChanged
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.extension.makeVisible
-import com.clevmania.leosbook.ui.GroundFragment
+import com.clevmania.leosbook.ui.base.GroundFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import kotlinx.android.synthetic.main.book_store_fragment.*
 

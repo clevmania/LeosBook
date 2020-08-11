@@ -1,4 +1,4 @@
-package com.clevmania.leosbook
+package com.clevmania.leosbook.api
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

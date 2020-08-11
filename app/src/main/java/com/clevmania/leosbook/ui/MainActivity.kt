@@ -1,4 +1,4 @@
-package com.clevmania.leosbook
+package com.clevmania.leosbook.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,9 +9,10 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.makeGone
 import com.clevmania.leosbook.extension.makeVisible
-import com.clevmania.leosbook.ui.ToolbarFragment
+import com.clevmania.leosbook.ui.base.ToolbarFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

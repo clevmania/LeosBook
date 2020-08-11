@@ -2,12 +2,10 @@ package com.clevmania.leosbook.ui.cart
 
 import android.os.Bundle
 import android.os.Parcelable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -18,11 +16,9 @@ import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.extension.makeGone
 import com.clevmania.leosbook.extension.makeVisible
-import com.clevmania.leosbook.ui.GroundFragment
-import com.clevmania.leosbook.ui.TopLevelFragment
+import com.clevmania.leosbook.ui.base.TopLevelFragment
 import com.clevmania.leosbook.ui.profile.ProfileFragment
 import com.clevmania.leosbook.utils.InjectorUtils
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener

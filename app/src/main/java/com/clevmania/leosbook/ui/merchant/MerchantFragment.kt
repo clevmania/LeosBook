@@ -1,8 +1,6 @@
 package com.clevmania.leosbook.ui.merchant
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +9,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.formatAmount
 import com.clevmania.leosbook.extension.formatDate
-import com.clevmania.leosbook.ui.GroundFragment
+import com.clevmania.leosbook.ui.base.GroundFragment
 import com.clevmania.leosbook.ui.merchant.model.ClientTransactions
-import com.clevmania.leosbook.ui.merchant.model.TransactionResponse
 import com.clevmania.leosbook.utils.InjectorUtils
 import kotlinx.android.synthetic.main.merchant_fragment.*
-import java.util.*
 
 class MerchantFragment : GroundFragment() {
     private lateinit var adapter: MerchantAdapter

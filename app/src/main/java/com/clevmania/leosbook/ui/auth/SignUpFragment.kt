@@ -8,7 +8,7 @@ import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.data.User
-import com.clevmania.leosbook.ui.AuthFragment
+import com.clevmania.leosbook.ui.base.AuthFragment
 import com.clevmania.leosbook.utils.ValidationException
 import com.clevmania.leosbook.utils.ValidationType
 import com.clevmania.leosbook.utils.validate

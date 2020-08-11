@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.ui
+package com.clevmania.leosbook.ui.base
 
 import android.app.AlertDialog
 import android.view.WindowManager
@@ -87,15 +87,18 @@ abstract class BaseFragment : Fragment() {
     }
 }
 
-abstract class TopLevelFragment : BaseFragment(), ToolbarFragment{
+abstract class TopLevelFragment : BaseFragment(),
+    ToolbarFragment {
     override val showToolbar = true
 }
 
-abstract class GroundFragment : BaseFragment(), ToolbarFragment{
+abstract class GroundFragment : BaseFragment(),
+    ToolbarFragment {
     override val showToolbar = false
 }
 
-abstract class AuthFragment : BaseFragment(), ToolbarFragment{
+abstract class AuthFragment : BaseFragment(),
+    ToolbarFragment {
     override val showToolbar = false
 
     override fun onStart() {
