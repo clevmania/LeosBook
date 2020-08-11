@@ -18,7 +18,7 @@ class BookStoreFragment : GroundFragment() {
     private lateinit var bookViewModel: BookStoreViewModel
     private lateinit var viewModelFactory: BookViewModelFactory
     private var bookStore = mutableListOf<BookStore>()
-    private lateinit var adapter: BookAdapter
+    private  var adapter = BookAdapter(bookStore)
 
     companion object {
         fun newInstance() =
@@ -31,7 +31,6 @@ class BookStoreFragment : GroundFragment() {
         viewModelFactory = InjectorUtils.provideViewModelFactory()
         bookViewModel =
             ViewModelProvider(this, viewModelFactory).get(BookStoreViewModel::class.java)
-        adapter = BookAdapter(bookStore)
     }
 
     override fun onCreateView(
@@ -83,7 +82,7 @@ class BookStoreFragment : GroundFragment() {
                             )
                         )
                     }
-                    adapter.notifyDataSetChanged()
+                    adapter.updateItems(bookStore)
                 }
             })
         }

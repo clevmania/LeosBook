@@ -7,6 +7,7 @@ import com.clevmania.leosbook.ui.checkout.SupportedBankList
  * for LeosBook
  */
 object Constants {
+    const val CHROME_PACKAGE: String = "com.android.chrome"
     const val DEFAULT_CURRENCY: String = "NGN"
     const val DEFAULT_TRANSFER_DURATION: Int = 3
     const val DEFAULT_TRANSFER_FREQUENCY: Int = 14

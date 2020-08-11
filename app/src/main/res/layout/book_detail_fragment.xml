@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.books.detail.BookDetailFragment">
 
     <TextView
@@ -28,10 +28,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/source_sans_pro_semi_bold"
         android:text="NGN 4,000"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
-        android:fontFamily="@font/source_sans_pro_semi_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,23 +40,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="K. J. Parker"
         android:fontFamily="@font/source_sans_pro_regular"
-        android:textSize="12sp"
+        android:text="K. J. Parker"
         android:textColor="@color/colorTextBody"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
         app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
 
     <RatingBar
         android:id="@+id/rbBooksRating"
+        style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:isIndicator="true"
         android:numStars="5"
         android:rating="3"
-        android:isIndicator="true"
-        style="@style/Widget.AppCompat.RatingBar.Small"
         android:theme="@style/RatingBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
@@ -66,10 +66,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="(200 reviews)"
-        android:textSize="12sp"
-        android:textColor="@color/colorTextBodyLight"
         android:fontFamily="@font/source_sans_pro_regular"
+        android:text="(200 reviews)"
+        android:textColor="@color/colorTextBodyLight"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/rbBooksRating"
         app:layout_constraintStart_toEndOf="@+id/rbBooksRating"
         app:layout_constraintTop_toTopOf="@+id/rbBooksRating" />
@@ -96,9 +96,9 @@
     <!--        app:layout_constraintTop_toBottomOf="@+id/ivBookPreview">-->
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/mbAddToCart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -108,18 +108,18 @@
             android:id="@+id/tlBookDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
             app:tabIndicator="@drawable/ic_tab_divider"
             app:tabIndicatorColor="@color/colorDivider"
-            app:tabSelectedTextColor="@color/colorTextBody"
             app:tabRippleColor="@android:color/transparent"
-            app:tabTextColor="@color/colorTabText"/>
+            app:tabSelectedTextColor="@color/colorTextBody"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+            app:tabTextColor="@color/colorTabText" />
 
         <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vpBookDetailsPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/vpBookDetailsPager"/>
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -127,16 +127,32 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbAddToCart"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="4dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="@color/colorPrimaryButton"
         android:text="ADD TO CART"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/mbPreviewBook"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbPreviewBook"
+        android:layout_width="0dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        android:backgroundTint="@color/colorPrimaryButton"
+        android:text="PREView"
+        android:textColor="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mbAddToCart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

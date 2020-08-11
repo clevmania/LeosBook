@@ -1,7 +1,14 @@
 package com.clevmania.leosbook.ui.books.detail
 
+import android.content.ComponentName
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.browser.customtabs.CustomTabsSession
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -26,6 +33,11 @@ class BookDetailFragment : TopLevelFragment() {
 
     private lateinit var viewModel: BookDetailViewModel
     private lateinit var viewModelFactory: BookDetailViewModelFactory
+
+    private val customTabPackage = Constants.CHROME_PACKAGE
+    private lateinit var customTabsIntent : CustomTabsIntent
+    private var customTabsClient : CustomTabsClient? = null
+    private var customTabsSession: CustomTabsSession? = null
 
     companion object {
         fun newInstance() = BookDetailFragment()
@@ -60,6 +72,7 @@ class BookDetailFragment : TopLevelFragment() {
             tab.text = getTabTitle(position)
         }.attach()
         mbAddToCart.setOnClickListener { addToCart() }
+        mbPreviewBook.setOnClickListener { launchMediaHandle(bookInfo.accessInfo.webReaderLink) }
     }
 
     private fun getTabTitle(pos : Int): String?{
@@ -147,6 +160,28 @@ class BookDetailFragment : TopLevelFragment() {
                     requireContext(),it,R.drawable.ic_shopping_cart)
             }
         })
+    }
+
+    private fun launchMediaHandle(webUrl : String){
+        val connection = object : CustomTabsServiceConnection() {
+            override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
+                customTabsClient = client
+                customTabsClient?.warmup(0L)
+                customTabsSession = customTabsClient!!.newSession(null)
+            }
+
+            override fun onServiceDisconnected(name: ComponentName) {
+                customTabsClient = null
+            }
+        }
+        CustomTabsClient.bindCustomTabsService(requireContext(),customTabPackage,connection)
+        customTabsIntent = CustomTabsIntent.Builder(customTabsSession)
+            .setShowTitle(true)
+            .setStartAnimations(requireContext(), R.anim.slide_in_right, R.anim.slide_out_left)
+            .setExitAnimations(requireContext(), R.anim.slide_in_left, R.anim.slide_out_right)
+            .setToolbarColor(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+            .build()
+        customTabsIntent.launchUrl(requireContext(), Uri.parse(webUrl))
     }
 
 }
