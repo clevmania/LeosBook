@@ -1,6 +1,11 @@
 package com.clevmania.leosbook.data
 
+import com.clevmania.leosbook.constants.Constants
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import java.io.Serializable
 
 /**
  * @author by Lawrence on 8/1/20.
@@ -13,5 +18,32 @@ object FirebaseUtils {
 
     fun getUID() : String?{ return getCurrentUser()?.uid }
 
+    private fun getDatabaseInstance() = FirebaseDatabase.getInstance()
+
+    private fun getLeoBooksReference(): DatabaseReference {
+        return getDatabaseInstance().getReference(Constants.LEOS_BOOKS)
+    }
+
+    private fun getUsersReference(): DatabaseReference {
+        return getLeoBooksReference().child(Constants.LEOS_USER)
+    }
+
+    fun saveUserDetails(user : User, uid: String): Task<Void?>{
+        return getUsersReference().child(uid).setValue(user)
+    }
+
+    fun getUserDetails(): DatabaseReference?{
+        getUID()?.let {
+            return getUsersReference().child(it)
+        }
+        return null
+    }
+
     fun signOut() { getAuthInstance().signOut() }
+}
+
+data class User(
+    val firstName : String, val lastName : String,
+    val mobile : String, val email: String) : Serializable{
+    constructor() : this(firstName = "", lastName = "", mobile = "", email="")
 }
