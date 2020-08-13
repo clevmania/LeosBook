@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
+import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import kotlinx.android.synthetic.main.item_book.view.*
 
@@ -17,8 +18,7 @@ import kotlinx.android.synthetic.main.item_book.view.*
  * for LeosBook
  */
 
-class BookAdapter(private var booksList: MutableList<BookStore>) :
-    PagingDataAdapter<Item,BookAdapter.ViewHolder>(REPO_COMPARATOR) {
+class BookAdapter : PagingDataAdapter<Item,BookAdapter.ViewHolder>(BOOK_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
@@ -26,41 +26,45 @@ class BookAdapter(private var booksList: MutableList<BookStore>) :
         )
     }
 
-    override fun getItemCount() = booksList.size
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bindView(booksList[position])
-    }
-
-
-    fun updateItems(filteredList: List<BookStore>) {
-        booksList = mutableListOf()
-        booksList.addAll(filteredList)
-        notifyDataSetChanged()
-    }
-
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bindView(book: BookStore) {
-            Glide.with(itemView.context)
-                .load(book.thumbnail)
-                .placeholder(R.drawable.img_placeholder)
-                .error(R.drawable.img_error)
-                .into(itemView.ivBookImg)
-            itemView.tvBookAuthor.text = book.authors.first()
-            itemView.tvBookCategory.text = book.category
-            itemView.tvBookPrice.text = book.price
-            itemView.tvBookTitle.text = book.title
-
-            itemView.setOnClickListener {
-                val action = BookStoreFragmentDirections
-                    .actionBookStoreFragmentToBookDetailFragment(book.volumeId)
-                it.findNavController().navigate(action)
-            }
+        getItem(position)?.let {
+            holder.bindView(it)
         }
     }
 
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bindView(book: Item) {
+            Glide.with(itemView.context)
+                .load(book.volumeInfo.imageLinks.thumbnail)
+                .placeholder(R.drawable.img_placeholder)
+                .error(R.drawable.img_error)
+                .into(itemView.ivBookImg)
+
+            itemView.tvBookAuthor.text = getAuthors(book.volumeInfo.authors)
+            itemView.tvBookCategory.text = getAuthors(book.volumeInfo.categories)
+            itemView.tvBookPrice.text = itemView.context.getString(R.string.price,
+                book.volumeInfo.pageCount.formatPrice())
+            itemView.tvBookTitle.text = book.volumeInfo.title
+
+            itemView.setOnClickListener {
+                val action = BookStoreFragmentDirections
+                    .actionBookStoreFragmentToBookDetailFragment(book.id)
+                it.findNavController().navigate(action)
+            }
+        }
+
+        private fun getAuthors(author: List<String>): String{
+             if(author.isNullOrEmpty()){
+                return "N/A"
+             }
+            return author.joinToString(separator = ", ", limit = 4)
+        }
+    }
+
+
+
     companion object {
-        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Item>() {
+        private val BOOK_COMPARATOR = object : DiffUtil.ItemCallback<Item>() {
             override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
                 oldItem.id == newItem.id
 

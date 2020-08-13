@@ -50,12 +50,12 @@ class BookStoreRepository(private val apiService: BookStoreDataService) :
 
     override fun getBookStreamResult(query: String): Flow<PagingData<Item>> {
         return Pager(
-            config = PagingConfig(NETWORK_PAGING_SIZE,enablePlaceholders = false),
+            config = PagingConfig(pageSize = NETWORK_PAGING_SIZE,enablePlaceholders = false),
             pagingSourceFactory = { BookStorePagingSource(apiService,query) }
         ).flow
     }
 
     companion object{
-        const val NETWORK_PAGING_SIZE = 20
+        const val NETWORK_PAGING_SIZE = 10
     }
 }

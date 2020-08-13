@@ -26,7 +26,7 @@ class BookStoreViewModel(private val dataSource: BookStoreDataSource) : ViewMode
     private var currentQueryValue : String? = null
     private var currentSearchResult : Flow<PagingData<Item>>? = null
 
-    init { getBooks("general") }
+//    init { getBooks("general") }
 
     fun getBooks(bookCategory: String) {
         viewModelScope.launch {

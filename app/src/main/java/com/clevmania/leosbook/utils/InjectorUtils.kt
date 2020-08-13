@@ -34,7 +34,7 @@ object InjectorUtils {
     }
 
     private fun <T : Any>provideBookService(cls : Class<out T>): T{
-        return BookStoreService().create(cls)
+        return BookStoreService.invoke().create(cls)
     }
 
     private fun <T : Any>provideFWService(cls : Class<out T>): T{
