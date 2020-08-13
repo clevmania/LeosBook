@@ -4,9 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
+import com.clevmania.leosbook.ui.books.vol.model.Item
 import kotlinx.android.synthetic.main.item_book.view.*
 
 /**
@@ -15,7 +18,7 @@ import kotlinx.android.synthetic.main.item_book.view.*
  */
 
 class BookAdapter(private var booksList: MutableList<BookStore>) :
-    RecyclerView.Adapter<BookAdapter.ViewHolder>() {
+    PagingDataAdapter<Item,BookAdapter.ViewHolder>(REPO_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
@@ -53,6 +56,16 @@ class BookAdapter(private var booksList: MutableList<BookStore>) :
                     .actionBookStoreFragmentToBookDetailFragment(book.volumeId)
                 it.findNavController().navigate(action)
             }
+        }
+    }
+
+    companion object {
+        private val REPO_COMPARATOR = object : DiffUtil.ItemCallback<Item>() {
+            override fun areItemsTheSame(oldItem: Item, newItem: Item): Boolean =
+                oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: Item, newItem: Item): Boolean =
+                oldItem == newItem
         }
     }
 }
