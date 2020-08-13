@@ -4,9 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.clevmania.leosbook.extension.toDefaultErrorMessage
 import com.clevmania.leosbook.ui.books.vol.model.BookVolumeResponse
+import com.clevmania.leosbook.ui.books.vol.model.Item
 import com.clevmania.leosbook.utils.UiEventUtils
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class BookStoreViewModel(private val dataSource: BookStoreDataSource) : ViewModel() {
@@ -18,6 +22,9 @@ class BookStoreViewModel(private val dataSource: BookStoreDataSource) : ViewMode
 
     private val _bookResponse = MutableLiveData<UiEventUtils<BookVolumeResponse>>()
     val bookResponse: LiveData<UiEventUtils<BookVolumeResponse>> = _bookResponse
+
+    private var currentQueryValue : String? = null
+    private var currentSearchResult : Flow<PagingData<Item>>? = null
 
     init { getBooks("general") }
 
@@ -36,5 +43,17 @@ class BookStoreViewModel(private val dataSource: BookStoreDataSource) : ViewMode
                 _progress.value = UiEventUtils(content = false)
             }
         }
+    }
+
+    fun getPaginatedBooks(bookCategory: String): Flow<PagingData<Item>>{
+        val result = currentSearchResult
+        if(bookCategory == currentQueryValue && result != null){
+            return result
+        }
+
+        currentQueryValue = bookCategory
+        val latestResult = dataSource.getBookStreamResult(bookCategory).cachedIn(viewModelScope)
+        currentSearchResult = latestResult
+        return latestResult
     }
 }
