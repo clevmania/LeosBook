@@ -24,6 +24,7 @@ import com.clevmania.leosbook.ui.books.detail.model.BookDetailResponse
 import com.clevmania.leosbook.utils.BadgeUtils.convertLayoutToImage
 import com.clevmania.leosbook.utils.GlideApp
 import com.clevmania.leosbook.utils.InjectorUtils
+import com.clevmania.leosbook.utils.UiUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.book_detail_fragment.*
 
@@ -118,7 +119,7 @@ class BookDetailFragment : TopLevelFragment() {
         bookInfo = it
         tvBookTitle.text = it.volumeInfo.title
         tvBookPrice.text = getString(R.string.price,it.volumeInfo.pageCount.formatPrice())
-        tvBookAuthor.text = it.volumeInfo.authors.toString()
+        tvBookAuthor.text = UiUtils.getAuthorsOrCategories(it.volumeInfo.authors)
         rbBooksRating.rating = it.volumeInfo.ratingsCount.toFloat()
         GlideApp.with(requireView())
             .load(it.volumeInfo.imageLinks.thumbnail)

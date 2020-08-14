@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.ui.books.vol.model.Item
+import com.clevmania.leosbook.utils.UiUtils
 import kotlinx.android.synthetic.main.item_book.view.*
 
 /**
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.item_book.view.*
  * for LeosBook
  */
 
-class BookAdapter : PagingDataAdapter<Item,BookAdapter.ViewHolder>(BOOK_COMPARATOR) {
+class BookAdapter : PagingDataAdapter<Item, BookAdapter.ViewHolder>(BOOK_COMPARATOR) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context)
@@ -40,10 +41,13 @@ class BookAdapter : PagingDataAdapter<Item,BookAdapter.ViewHolder>(BOOK_COMPARAT
                 .error(R.drawable.img_error)
                 .into(itemView.ivBookImg)
 
-            itemView.tvBookAuthor.text = getAuthors(book.volumeInfo.authors)
-            itemView.tvBookCategory.text = getAuthors(book.volumeInfo.categories)
-            itemView.tvBookPrice.text = itemView.context.getString(R.string.price,
-                book.volumeInfo.pageCount.formatPrice())
+            itemView.tvBookAuthor.text = UiUtils.getAuthorsOrCategories(book.volumeInfo.authors)
+            itemView.tvBookCategory.text =
+                UiUtils.getAuthorsOrCategories(book.volumeInfo.categories)
+            itemView.tvBookPrice.text = itemView.context.getString(
+                R.string.price,
+                book.volumeInfo.pageCount.formatPrice()
+            )
             itemView.tvBookTitle.text = book.volumeInfo.title
 
             itemView.setOnClickListener {
@@ -52,15 +56,7 @@ class BookAdapter : PagingDataAdapter<Item,BookAdapter.ViewHolder>(BOOK_COMPARAT
                 it.findNavController().navigate(action)
             }
         }
-
-        private fun getAuthors(author: List<String>): String{
-             if(author.isNullOrEmpty()){
-                return "N/A"
-             }
-            return author.joinToString(separator = ", ", limit = 4)
-        }
     }
-
 
 
     companion object {
