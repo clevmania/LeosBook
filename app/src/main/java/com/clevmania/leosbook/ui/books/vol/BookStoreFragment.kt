@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -11,6 +12,7 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.filter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.afterTextChanged
 import com.clevmania.leosbook.extension.formatPrice
@@ -60,12 +62,36 @@ class BookStoreFragment : GroundFragment() {
         btnSciFi.setOnClickListener { getBookInCategory(btnSciFi.text.toString()) }
         btnHistory.apply { setOnClickListener { getBookInCategory(text.toString()) } }
 
-        rvBookList.adapter = adapter
         getBookInCategory("general")
         scrollToTopPositionOnNewSearch()
         grpBookStore.makeVisible()
         searchBooks()
+        initAdapter()
+    }
 
+    private fun initAdapter() {
+        rvBookList.adapter = adapter.withLoadStateHeaderAndFooter(
+            header = BookLoadStateAdapter { adapter.retry() },
+            footer = BookLoadStateAdapter { adapter.retry() }
+        )
+
+        adapter.addLoadStateListener {combinedLoadStates ->
+            grpBookStore.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
+            progressBar.isVisible = combinedLoadStates.source.refresh is LoadState.Loading
+            btnRetry.isVisible = combinedLoadStates.source.refresh is LoadState.Error
+
+
+            // For any other error
+            val errorState = combinedLoadStates.source.append as? LoadState.Error
+                ?: combinedLoadStates.source.prepend as? LoadState.Error
+                ?: combinedLoadStates.append as? LoadState.Error
+                ?: combinedLoadStates.prepend as? LoadState.Error
+
+            errorState?.let {
+                showErrorDialog("\uD83D\uDE28 Wooops ${it.error}",
+                    "Something went wrong")
+            }
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
