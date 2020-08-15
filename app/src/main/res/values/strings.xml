@@ -42,5 +42,6 @@
     <string name="update_profile">Update Profile</string>
     <string name="create_update_profile">ProfileUpdate</string>
     <string name="n_a">N/A</string>
+    <string name="general">general</string>
 
 </resources>

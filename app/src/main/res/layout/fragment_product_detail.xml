@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="18sp"
         android:fontFamily="@font/source_sans_pro_semi_bold"
         android:text="@string/n_a" />

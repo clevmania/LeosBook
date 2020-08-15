@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         tools:text="An Error Occurred"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         android:fontFamily="@font/source_sans_pro_regular"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

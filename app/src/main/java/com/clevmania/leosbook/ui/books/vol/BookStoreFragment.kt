@@ -8,19 +8,16 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.filter
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.afterTextChanged
-import com.clevmania.leosbook.extension.formatPrice
-import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.base.GroundFragment
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import com.clevmania.leosbook.utils.InjectorUtils
 import kotlinx.android.synthetic.main.book_store_fragment.*
+import kotlinx.android.synthetic.main.book_store_fragment.view.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
@@ -30,22 +27,16 @@ import kotlinx.coroutines.launch
 
 class BookStoreFragment : GroundFragment() {
     private lateinit var bookViewModel: BookStoreViewModel
-    private lateinit var viewModelFactory: BookViewModelFactory
-    private var bookStore : PagingData<Item>? = null
-    private  var adapter = BookAdapter()
-    private var bookJob : Job? = null
-
-    companion object {
-        fun newInstance() =
-            BookStoreFragment()
-    }
+    private var bookStore: PagingData<Item>? = null
+    private var adapter = BookAdapter()
+    private var bookJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModelFactory = InjectorUtils.provideViewModelFactory()
-        bookViewModel =
-            ViewModelProvider(this, viewModelFactory).get(BookStoreViewModel::class.java)
+        bookViewModel = ViewModelProvider(
+            this, InjectorUtils.provideViewModelFactory()
+        ).get(BookStoreViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -55,16 +46,37 @@ class BookStoreFragment : GroundFragment() {
         return inflater.inflate(R.layout.book_store_fragment, container, false)
     }
 
+    private val clickListener = View.OnClickListener { v ->
+        when (v?.id) {
+            R.id.btnArts -> {
+                getBookInCategory(v.btnArts.text.toString())
+            }
+            R.id.btnRomance -> {
+                getBookInCategory(v.btnRomance.text.toString())
+            }
+            R.id.btnSciFi -> {
+                getBookInCategory(v.btnSciFi.text.toString())
+            }
+            R.id.btnHistory -> {
+                getBookInCategory(v.btnHistory.text.toString())
+            }
+            R.id.btnAll -> {
+                getBookInCategory(getString(R.string.general))
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        btnArts.setOnClickListener { getBookInCategory(btnArts.text.toString()) }
-        btnRomance.setOnClickListener { getBookInCategory(btnRomance.text.toString()) }
-        btnSciFi.setOnClickListener { getBookInCategory(btnSciFi.text.toString()) }
-        btnHistory.apply { setOnClickListener { getBookInCategory(text.toString()) } }
+        btnArts.setOnClickListener(clickListener)
+        btnRomance.setOnClickListener(clickListener)
+        btnSciFi.setOnClickListener(clickListener)
+        btnHistory.setOnClickListener(clickListener)
+        btnAll.setOnClickListener(clickListener)
+        btnRetry.setOnClickListener { adapter.retry() }
 
-        getBookInCategory("general")
         scrollToTopPositionOnNewSearch()
-        grpBookStore.makeVisible()
+//        grpBookStore.makeVisible()
         searchBooks()
         initAdapter()
     }
@@ -75,8 +87,8 @@ class BookStoreFragment : GroundFragment() {
             footer = BookLoadStateAdapter { adapter.retry() }
         )
 
-        adapter.addLoadStateListener {combinedLoadStates ->
-            grpBookStore.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
+        adapter.addLoadStateListener { combinedLoadStates ->
+            rvBookList.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
             progressBar.isVisible = combinedLoadStates.source.refresh is LoadState.Loading
             btnRetry.isVisible = combinedLoadStates.source.refresh is LoadState.Error
 
@@ -88,8 +100,10 @@ class BookStoreFragment : GroundFragment() {
                 ?: combinedLoadStates.prepend as? LoadState.Error
 
             errorState?.let {
-                showErrorDialog("\uD83D\uDE28 Wooops ${it.error}",
-                    "Something went wrong")
+                showErrorDialog(
+                    "\uD83D\uDE28 Wooops ${it.error}",
+                    "Something went wrong"
+                )
             }
         }
     }
@@ -110,22 +124,10 @@ class BookStoreFragment : GroundFragment() {
             })
 
             bookResponse.observe(viewLifecycleOwner, Observer { uiEvent ->
-//                uiEvent.getContentIfNotHandled()?.let {
-//                    bookStore.clear()
-//                    it.items.forEach { item ->
-//                        bookStore.add(
-//                            BookStore(
-//                                item.volumeInfo.title,
-//                                item.volumeInfo.imageLinks.smallThumbnail,
-//                                "General",
-//                                item.volumeInfo.authors ?: listOf("N/A"),
-//                                getString(R.string.price,item.volumeInfo.pageCount.formatPrice()),
-//                                item.id
-//                            )
-//                        )
-//                    }
-//                    adapter.updateItems(bookStore)
-//                }
+                uiEvent.getContentIfNotHandled()?.let {
+                    bookStore = it
+                    adapter.submitData(lifecycle, it)
+                }
             })
         }
     }
@@ -138,16 +140,17 @@ class BookStoreFragment : GroundFragment() {
                         item.volumeInfo.title.contains(query, ignoreCase = true) ||
                                 item.volumeInfo.authors != null &&
                                 item.volumeInfo.authors
-                                    .joinToString(", ").contains(query, true)}
+                                    .joinToString(", ").contains(query, true)
+                    }
                     adapter.submitData(lifecycle, searchResult)
                 } else {
-                    adapter.submitData(lifecycle,it)
+                    adapter.submitData(lifecycle, it)
                 }
             }
         }
     }
 
-    private fun getBookInCategory(name : String){
+    private fun getBookInCategory(name: String) {
         bookJob?.cancel()
         bookJob = lifecycleScope.launch {
             bookViewModel.getPaginatedBooks(name).collectLatest {
@@ -157,7 +160,7 @@ class BookStoreFragment : GroundFragment() {
         }
     }
 
-    private fun scrollToTopPositionOnNewSearch(){
+    private fun scrollToTopPositionOnNewSearch() {
         lifecycleScope.launch {
             adapter.loadStateFlow
                 .distinctUntilChangedBy { it.refresh }
@@ -166,10 +169,4 @@ class BookStoreFragment : GroundFragment() {
         }
     }
 
-
 }
-
-data class BookStore(
-    val title: String, val thumbnail: String, val category: String,
-    val authors: List<String>, val price: String, val volumeId: String
-)

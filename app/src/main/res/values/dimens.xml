@@ -2,4 +2,5 @@
 <resources>
     <dimen name="button_height">55dp</dimen>
     <dimen name="ten_dp">10sp</dimen>
+    <dimen name="chipCornerSize">4dp</dimen>
 </resources>

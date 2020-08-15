@@ -11,6 +11,7 @@ import com.clevmania.leosbook.ui.books.vol.model.BookVolumeResponse
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import com.clevmania.leosbook.utils.UiEventUtils
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class BookStoreViewModel(private val dataSource: BookStoreDataSource) : ViewModel() {
@@ -20,27 +21,23 @@ class BookStoreViewModel(private val dataSource: BookStoreDataSource) : ViewMode
     private val _error = MutableLiveData<UiEventUtils<String>>()
     val error: LiveData<UiEventUtils<String>> = _error
 
-    private val _bookResponse = MutableLiveData<UiEventUtils<BookVolumeResponse>>()
-    val bookResponse: LiveData<UiEventUtils<BookVolumeResponse>> = _bookResponse
+    private val _bookResponse = MutableLiveData<UiEventUtils<PagingData<Item>>>()
+    val bookResponse: LiveData<UiEventUtils<PagingData<Item>>> = _bookResponse
 
     private var currentQueryValue : String? = null
     private var currentSearchResult : Flow<PagingData<Item>>? = null
 
-//    init { getBooks("general") }
+    init { getBooks("general") }
 
-    fun getBooks(bookCategory: String) {
+    private fun getBooks(bookCategory: String) {
+
         viewModelScope.launch {
-            _progress.value = UiEventUtils(content = true)
 
-            try {
-                val response = dataSource.fetchBooks(bookCategory)
-                response.let {
-                    _bookResponse.value = UiEventUtils(it)
+            val response = getPaginatedBooks(bookCategory)
+            response.let {
+                it.collectLatest {data ->
+                    _bookResponse.value = UiEventUtils(data)
                 }
-            } catch (ex: Exception) {
-                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
-            } finally {
-                _progress.value = UiEventUtils(content = false)
             }
         }
     }

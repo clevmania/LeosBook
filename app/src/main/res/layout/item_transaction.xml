@@ -64,7 +64,7 @@
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/source_sans_pro_regular"
         android:text="FLW770151596964029473"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/tvAmount"
         app:layout_constraintTop_toBottomOf="@+id/tvAmount" />
