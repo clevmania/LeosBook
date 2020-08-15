@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
+import com.clevmania.leosbook.extension.onActionDone
 import com.clevmania.leosbook.extension.toDefaultErrorMessage
 import com.clevmania.leosbook.ui.base.AuthFragment
 import com.clevmania.leosbook.utils.ValidationException
@@ -49,6 +50,7 @@ class SignInFragment : AuthFragment() {
             startActivityForResult(googleSignInClient.signInIntent, Constants.RC_SIGN_IN)
         }
         mbSignIn.setOnClickListener { signUpUser() }
+        tiePassword.onActionDone { signUpUser() }
         tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_signUpFragment)
         }
