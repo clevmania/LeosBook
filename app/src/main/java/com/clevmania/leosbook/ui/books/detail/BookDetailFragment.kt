@@ -19,6 +19,7 @@ import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.formatPrice
+import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.base.TopLevelFragment
 import com.clevmania.leosbook.ui.books.detail.model.BookDetailResponse
 import com.clevmania.leosbook.utils.BadgeUtils.convertLayoutToImage
@@ -35,7 +36,6 @@ class BookDetailFragment : TopLevelFragment() {
     private lateinit var viewModel: BookDetailViewModel
     private lateinit var viewModelFactory: BookDetailViewModelFactory
 
-    private val customTabPackage = Constants.CHROME_PACKAGE
     private lateinit var customTabsIntent : CustomTabsIntent
     private var customTabsClient : CustomTabsClient? = null
     private var customTabsSession: CustomTabsSession? = null
@@ -128,6 +128,7 @@ class BookDetailFragment : TopLevelFragment() {
             .transform(CenterCrop())
             .into(ivBookPreview)
         viewModel.saveDescription(it.volumeInfo.description ?: getString(R.string.none_available))
+        grpBookDetail.makeVisible()
     }
 
     private fun addToCart(){
@@ -175,7 +176,7 @@ class BookDetailFragment : TopLevelFragment() {
                 customTabsClient = null
             }
         }
-        CustomTabsClient.bindCustomTabsService(requireContext(),customTabPackage,connection)
+        CustomTabsClient.bindCustomTabsService(requireContext(),Constants.CHROME_PACKAGE,connection)
         customTabsIntent = CustomTabsIntent.Builder(customTabsSession)
             .setShowTitle(true)
             .setStartAnimations(requireContext(), R.anim.slide_in_right, R.anim.slide_out_left)

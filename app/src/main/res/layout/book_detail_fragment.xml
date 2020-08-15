@@ -15,12 +15,12 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/source_sans_pro_semi_bold"
-        android:text="Prosper’s Demon"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         app:layout_constraintEnd_toStartOf="@+id/tvBookPrice"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Prosper’s Demon" />
 
     <TextView
         android:id="@+id/tvBookPrice"
@@ -29,11 +29,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/source_sans_pro_semi_bold"
-        android:text="NGN 4,000"
         android:textColor="@color/colorBlack"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="NGN 4,000" />
 
     <TextView
         android:id="@+id/tvBookAuthor"
@@ -41,11 +41,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/source_sans_pro_regular"
-        android:text="K. J. Parker"
         android:textColor="@color/colorTextPrimary"
         android:textSize="12sp"
         app:layout_constraintStart_toStartOf="@+id/tvBookTitle"
-        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBookTitle"
+        tools:text="K. J. Parker" />
 
     <RatingBar
         android:id="@+id/rbBooksRating"
@@ -67,13 +67,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:fontFamily="@font/source_sans_pro_regular"
-        android:text="(200 reviews)"
-        android:visibility="gone"
         android:textColor="@color/colorTextSecondary"
         android:textSize="12sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/rbBooksRating"
         app:layout_constraintStart_toEndOf="@+id/rbBooksRating"
-        app:layout_constraintTop_toTopOf="@+id/rbBooksRating" />
+        app:layout_constraintTop_toTopOf="@+id/rbBooksRating"
+        tools:text="(200 reviews)" />
 
     <ImageView
         android:id="@+id/ivBookPreview"
@@ -87,16 +87,8 @@
         app:layout_constraintTop_toBottomOf="@+id/rbBooksRating"
         tools:src="@tools:sample/avatars" />
 
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/flDetailsContainer"-->
-    <!--        android:layout_width="0dp"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toTopOf="@+id/mbAddToCart"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@+id/ivBookPreview">-->
-
     <LinearLayout
+        android:id="@+id/llBookInfo"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -124,8 +116,6 @@
 
     </LinearLayout>
 
-    <!--    </FrameLayout>-->
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbAddToCart"
         android:layout_width="0dp"
@@ -145,9 +135,9 @@
         android:id="@+id/mbPreviewBook"
         android:layout_width="0dp"
         android:layout_height="55dp"
+        android:layout_marginStart="4dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginStart="4dp"
         android:backgroundTint="@color/colorPrimaryButton"
         android:text="PREView"
         android:textColor="@color/colorWhite"
@@ -155,5 +145,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/mbAddToCart" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/grpBookDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="mbAddToCart,llBookInfo,tvBookPrice,ivBookPreview,tvBookTitle,tvBookAuthor,tvNumOfReviews,mbPreviewBook,rbBooksRating" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
