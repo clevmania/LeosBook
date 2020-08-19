@@ -24,6 +24,8 @@ class MerchantAdapter(private val transactionList : List<ClientTransactions>)
             itemView.tvPaymentType.text = trans.paymentType
             itemView.tvTransactionDate.text = trans.date
             itemView.tvAmount.text = trans.amount
+            itemView.tvNetAmount.text = trans.settlement
+            itemView.tvProcessingFee.text = trans.fee
         }
     }
 

@@ -27,5 +27,8 @@
     <color name="colorIntroDescription">#656565</color>
     <color name="colorDivider">#BDBDBD</color>
 
+    <color name="colorMerchantsIncome">#49A399</color>
+    <color name="colorProcessingFee">#D03C6A</color>
+
 
 </resources>

@@ -64,7 +64,9 @@ class MerchantFragment : GroundFragment() {
                         transactionList.add(
                             ClientTransactions(transItem.customer.name,transItem.flw_ref,
                                 transItem.created_at.formatDate(),transItem.amount.formatAmount(),
-                                transItem.payment_type.first().toString().toUpperCase()
+                                transItem.payment_type.first().toString().toUpperCase(),
+                                transItem.app_fee.formatAmount(),
+                                transItem.amount_settled.formatAmount()
                             )
                         )
                     }
