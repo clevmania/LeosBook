@@ -16,7 +16,7 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
-import com.clevmania.leosbook.data.Cart
+import com.clevmania.leosbook.data.local.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.formatPrice
 import com.clevmania.leosbook.extension.makeVisible
@@ -132,10 +132,12 @@ class BookDetailFragment : TopLevelFragment() {
     }
 
     private fun addToCart(){
-        val cartItem = Cart(bookInfo.id,bookInfo.volumeInfo.title,
+        val cartItem = Cart(
+            bookInfo.id, bookInfo.volumeInfo.title,
             bookInfo.volumeInfo.imageLinks.thumbnail
-            ,bookInfo.volumeInfo.pageCount,
-            Constants.BOOK_QUANTITY, FirebaseUtils.getUID()!!)
+            , bookInfo.volumeInfo.pageCount,
+            Constants.BOOK_QUANTITY, FirebaseUtils.getUID()!!
+        )
 
         viewModel.addBookToCart(cartItem)
     }

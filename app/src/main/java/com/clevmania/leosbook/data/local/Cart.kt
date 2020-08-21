@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.data
+package com.clevmania.leosbook.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

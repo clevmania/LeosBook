@@ -1,10 +1,15 @@
-package com.clevmania.leosbook.data
+package com.clevmania.leosbook.data.local
+
+import com.clevmania.leosbook.data.local.Cart
+import com.clevmania.leosbook.data.local.CartDao
+import com.clevmania.leosbook.data.local.CartDataSource
 
 /**
  * @author by Lawrence on 8/3/20.
  * for LeosBook
  */
-class CartLocalDataSource(private val cartDao: CartDao): CartDataSource {
+class CartLocalDataSource(private val cartDao: CartDao):
+    CartDataSource {
     override suspend fun getAllCartItem(uid: String) = cartDao.getAllCartItem(uid)
 
     override suspend fun countItemsInCart(uid: String) = cartDao.countItemsInCart(uid)

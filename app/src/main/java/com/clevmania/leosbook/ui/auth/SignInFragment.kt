@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
@@ -20,6 +21,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.android.synthetic.main.book_store_fragment.*
 import kotlinx.android.synthetic.main.sign_in_fragment.*
 
 class SignInFragment : AuthFragment() {
@@ -68,19 +70,21 @@ class SignInFragment : AuthFragment() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
+                        toggleBlockingProgress(false)
                         findNavController()
                             .navigate(R.id.action_signInFragment_to_bookStoreFragment)
                     } else {
                         // Auth Failed
+                        toggleBlockingProgress(false)
                         longSnackBar("Wrong email or password. Try Again!")
                     }
                 }
         } catch (ex: ValidationException) {
+            toggleBlockingProgress(false)
             ex.printStackTrace()
         }catch (ex : Exception){
-            showErrorDialog(ex.toDefaultErrorMessage())
-        } finally {
             toggleBlockingProgress(false)
+            showErrorDialog(ex.toDefaultErrorMessage())
         }
     }
 

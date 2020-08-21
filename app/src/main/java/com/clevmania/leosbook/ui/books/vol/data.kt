@@ -3,7 +3,7 @@ package com.clevmania.leosbook.ui.books.vol
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.clevmania.leosbook.data.BookStorePagingSource
+import com.clevmania.leosbook.data.paging.BookStorePagingSource
 import com.clevmania.leosbook.ui.books.vol.model.BookVolumeResponse
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import kotlinx.coroutines.flow.Flow
@@ -51,7 +51,12 @@ class BookStoreRepository(private val apiService: BookStoreDataService) :
     override fun getBookStreamResult(query: String): Flow<PagingData<Item>> {
         return Pager(
             config = PagingConfig(pageSize = NETWORK_PAGING_SIZE,enablePlaceholders = false),
-            pagingSourceFactory = { BookStorePagingSource(apiService,query) }
+            pagingSourceFactory = {
+                BookStorePagingSource(
+                    apiService,
+                    query
+                )
+            }
         ).flow
     }
 

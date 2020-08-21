@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
-import com.clevmania.leosbook.data.Cart
+import com.clevmania.leosbook.data.local.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.data.User
 import com.clevmania.leosbook.extension.formatPrice

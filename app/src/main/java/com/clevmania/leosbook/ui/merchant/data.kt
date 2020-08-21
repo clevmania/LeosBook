@@ -3,7 +3,7 @@ package com.clevmania.leosbook.ui.merchant
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.clevmania.leosbook.data.TransactionsPagingSource
+import com.clevmania.leosbook.data.paging.TransactionsPagingSource
 import com.clevmania.leosbook.model.MerchantTransactions
 import com.clevmania.leosbook.ui.merchant.model.TransactionResponseItem
 import kotlinx.coroutines.flow.Flow

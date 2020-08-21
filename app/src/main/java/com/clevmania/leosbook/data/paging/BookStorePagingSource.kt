@@ -1,8 +1,7 @@
-package com.clevmania.leosbook.data
+package com.clevmania.leosbook.data.paging
 
 import androidx.paging.PagingSource
 import com.clevmania.leosbook.ui.books.vol.BookStoreDataService
-import com.clevmania.leosbook.ui.books.vol.model.BookVolumeResponse
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import retrofit2.HttpException
 import java.io.IOException

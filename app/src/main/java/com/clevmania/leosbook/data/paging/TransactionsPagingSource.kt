@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.data
+package com.clevmania.leosbook.data.paging
 
 import androidx.paging.PagingSource
 import com.clevmania.leosbook.ui.merchant.TransactionService
@@ -20,7 +20,8 @@ class TransactionsPagingSource(
 
         return try {
             val response = apiService.retrievePaginatedTransactions(
-                FLUTTER_TRANSACTION_STARTING_PAGE_INDEX)
+                FLUTTER_TRANSACTION_STARTING_PAGE_INDEX
+            )
             LoadResult.Page(
                 response.data!!,
                 prevKey = if(position == FLUTTER_TRANSACTION_STARTING_PAGE_INDEX) null else position -1,
