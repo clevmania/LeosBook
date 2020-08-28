@@ -5,6 +5,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 
 /**
@@ -33,4 +34,15 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
             afterTextChanged.invoke(editable.toString())
         }
     })
+}
+
+fun EditText.onActionDone(actionToPerform: () -> Unit) {
+    setOnEditorActionListener { _, actionId, _ ->
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            actionToPerform.invoke()
+            true
+        }else{
+            false
+        }
+    }
 }

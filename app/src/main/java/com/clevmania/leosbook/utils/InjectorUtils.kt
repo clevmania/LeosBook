@@ -2,11 +2,11 @@ package com.clevmania.leosbook.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.clevmania.leosbook.BookStoreService
-import com.clevmania.leosbook.FWApiService
-import com.clevmania.leosbook.data.CartDao
-import com.clevmania.leosbook.data.CartDatabase
-import com.clevmania.leosbook.data.CartLocalDataSource
+import com.clevmania.leosbook.api.BookStoreService
+import com.clevmania.leosbook.api.FWApiService
+import com.clevmania.leosbook.data.local.CartDao
+import com.clevmania.leosbook.data.local.CartDatabase
+import com.clevmania.leosbook.data.local.CartLocalDataSource
 import com.clevmania.leosbook.ui.books.vol.BookStoreDataService
 import com.clevmania.leosbook.ui.books.vol.BookStoreRepository
 import com.clevmania.leosbook.ui.books.vol.BookViewModelFactory
@@ -34,7 +34,7 @@ object InjectorUtils {
     }
 
     private fun <T : Any>provideBookService(cls : Class<out T>): T{
-        return BookStoreService().create(cls)
+        return BookStoreService.invoke().create(cls)
     }
 
     private fun <T : Any>provideFWService(cls : Class<out T>): T{

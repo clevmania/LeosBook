@@ -1,13 +1,11 @@
 package com.clevmania.leosbook.ui.merchant
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.clevmania.leosbook.extension.toDefaultErrorMessage
-import com.clevmania.leosbook.ui.merchant.model.TransactionResponse
+import androidx.lifecycle.*
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.clevmania.leosbook.ui.merchant.model.TransactionResponseItem
 import com.clevmania.leosbook.utils.UiEventUtils
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MerchantViewModel(private val transactionDataSource: TransactionDataSource) : ViewModel() {
@@ -17,26 +15,38 @@ class MerchantViewModel(private val transactionDataSource: TransactionDataSource
     private var _error = MutableLiveData<UiEventUtils<String>>()
     val error : LiveData<UiEventUtils<String>> = _error
 
-    private var _transactions = MutableLiveData<UiEventUtils<List<TransactionResponseItem>>>()
-    val transaction : LiveData<UiEventUtils<List<TransactionResponseItem>>> = _transactions
+    private var _transactions = MutableLiveData<UiEventUtils<PagingData<TransactionResponseItem>>>()
+    val transaction : LiveData<UiEventUtils<PagingData<TransactionResponseItem>>> = _transactions
 
-    init { getAllTransaction() }
+    init { getPaginatedTransactions() }
 
-    private fun getAllTransaction(){
+//    private fun getAllTransaction(){
+//        viewModelScope.launch {
+//            try {
+//                _progress.value = UiEventUtils(true)
+//                val allTrans = transactionDataSource.retrieveTransactions()
+//
+//                allTrans.data?.let {
+//                    _transactions.value = UiEventUtils(it)
+//                }
+//
+//            }catch ( ex: Exception){
+//                ex.printStackTrace()
+//                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
+//            }finally {
+//                _progress.value = UiEventUtils(false)
+//            }
+//        }
+//    }
+
+    private fun getPaginatedTransactions() {
         viewModelScope.launch {
-            try {
-                _progress.value = UiEventUtils(true)
-                val allTrans = transactionDataSource.retrieveTransactions()
+            val response = transactionDataSource.getTransactionStream().cachedIn(this)
 
-                allTrans.data?.let {
-                    _transactions.value = UiEventUtils(it)
+            response.let {
+                it.collectLatest {data ->
+                    _transactions.value = UiEventUtils(data)
                 }
-
-            }catch ( ex: Exception){
-                ex.printStackTrace()
-                _error.value = UiEventUtils(ex.toDefaultErrorMessage())
-            }finally {
-                _progress.value = UiEventUtils(false)
             }
         }
     }

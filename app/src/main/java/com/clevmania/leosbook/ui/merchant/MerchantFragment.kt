@@ -1,26 +1,20 @@
 package com.clevmania.leosbook.ui.merchant
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.LoadState
 import com.clevmania.leosbook.R
-import com.clevmania.leosbook.extension.formatAmount
-import com.clevmania.leosbook.extension.formatDate
-import com.clevmania.leosbook.ui.GroundFragment
-import com.clevmania.leosbook.ui.merchant.model.ClientTransactions
-import com.clevmania.leosbook.ui.merchant.model.TransactionResponse
+import com.clevmania.leosbook.ui.base.GroundFragment
 import com.clevmania.leosbook.utils.InjectorUtils
 import kotlinx.android.synthetic.main.merchant_fragment.*
-import java.util.*
 
 class MerchantFragment : GroundFragment() {
-    private lateinit var adapter: MerchantAdapter
-    private var transactionList = arrayListOf<ClientTransactions>()
+    private var adapter = MerchantAdapter()
 
     companion object {
         fun newInstance() = MerchantFragment()
@@ -30,8 +24,10 @@ class MerchantFragment : GroundFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this,
-            InjectorUtils.provideMerchantViewModelFactory()).get(MerchantViewModel::class.java)
+        viewModel = ViewModelProvider(
+            this,
+            InjectorUtils.provideMerchantViewModelFactory()
+        ).get(MerchantViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -43,13 +39,13 @@ class MerchantFragment : GroundFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = MerchantAdapter(transactionList)
-        rvTransactions.adapter = adapter
+        initAdapter()
+        btnRetry.setOnClickListener { adapter.retry() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        with(viewModel){
+        with(viewModel) {
             progress.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
                     toggleBlockingProgress(it)
@@ -64,17 +60,31 @@ class MerchantFragment : GroundFragment() {
 
             transaction.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    it.forEach {transItem ->
-                        transactionList.add(
-                            ClientTransactions(transItem.customer.name,transItem.flw_ref,
-                                transItem.created_at.formatDate(),transItem.amount.formatAmount(),
-                                transItem.payment_type.first().toString().toUpperCase()
-                            )
-                        )
-                    }
-                    adapter.notifyDataSetChanged()
+                    adapter.submitData(lifecycle, it)
                 }
             })
+        }
+    }
+
+    private fun initAdapter() {
+        rvTransactions.adapter = adapter
+        adapter.addLoadStateListener { combinedLoadStates ->
+            rvTransactions.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
+            toggleBlockingProgress(combinedLoadStates.source.refresh is LoadState.Loading)
+            btnRetry.isVisible = combinedLoadStates.source.refresh is LoadState.Error
+
+            // For any other error
+            val errorState = combinedLoadStates.source.append as? LoadState.Error
+                ?: combinedLoadStates.source.prepend as? LoadState.Error
+                ?: combinedLoadStates.append as? LoadState.Error
+                ?: combinedLoadStates.prepend as? LoadState.Error
+
+            errorState?.let {
+                showErrorDialog(
+                    "\uD83D\uDE28 Wooops ${it.error}",
+                    "Something went wrong"
+                )
+            }
         }
     }
 

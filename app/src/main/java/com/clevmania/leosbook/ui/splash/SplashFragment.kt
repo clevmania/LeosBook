@@ -2,7 +2,7 @@ package com.clevmania.leosbook.ui.splash
 
 import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
-import com.clevmania.leosbook.ui.AuthFragment
+import com.clevmania.leosbook.ui.base.AuthFragment
 import com.clevmania.leosbook.ui.onboard.OnBoardingManager
 import com.clevmania.leosbook.utils.InjectorUtils
 

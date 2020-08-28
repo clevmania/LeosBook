@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.clevmania.leosbook.data.Cart
-import com.clevmania.leosbook.data.CartLocalDataSource
+import com.clevmania.leosbook.data.local.Cart
+import com.clevmania.leosbook.data.local.CartLocalDataSource
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.toDefaultErrorMessage
 import com.clevmania.leosbook.utils.UiEventUtils

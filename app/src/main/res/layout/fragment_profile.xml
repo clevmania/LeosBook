@@ -134,7 +134,7 @@
             android:hint="@string/mobile"
             android:inputType="number"
             android:maxLength="11"
-            android:textColor="@color/colorTextBody" />
+            android:textColor="@color/colorTextPrimary" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

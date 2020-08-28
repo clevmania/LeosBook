@@ -1,4 +1,6 @@
-package com.clevmania.leosbook.data
+package com.clevmania.leosbook.data.local
+
+import com.clevmania.leosbook.data.local.Cart
 
 /**
  * @author by Lawrence on 8/3/20.
