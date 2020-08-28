@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
 import com.clevmania.leosbook.data.User
+import com.clevmania.leosbook.extension.formatAmount
 import com.clevmania.leosbook.extension.makeGone
 import com.clevmania.leosbook.extension.makeVisible
 import com.clevmania.leosbook.ui.base.TopLevelFragment
@@ -87,10 +88,9 @@ class CheckOutFragment : TopLevelFragment() {
 
             transferMeta.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
-                    tvAmountToPay.text = it.transfer_amount.toString()
+                    tvAmountToPay.text = it.transfer_amount.formatAmount()
                     tvBankAccountNo.text = it.transfer_account
                     tvBankName.text = it.transfer_bank
-                    tvPaymentNote.text = it.transfer_note
                     grpBankTransferView.makeVisible()
                 }
             })

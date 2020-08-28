@@ -43,5 +43,6 @@
     <string name="create_update_profile">ProfileUpdate</string>
     <string name="n_a">N/A</string>
     <string name="general">general</string>
+    <string name="pay_into_the_account_number_above">Pay into the account number above</string>
 
 </resources>

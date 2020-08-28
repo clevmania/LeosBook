@@ -9,3 +9,7 @@ data class BankAuthorizationMeta(
     val transfer_note: String,
     val transfer_reference: String
 )
+
+data class TransferMeta(
+    val authorization: BankAuthorizationMeta
+)
