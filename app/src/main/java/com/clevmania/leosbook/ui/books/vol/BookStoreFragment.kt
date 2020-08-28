@@ -8,11 +8,14 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.filter
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.afterTextChanged
+import com.clevmania.leosbook.extension.hideOrShowFloatingActionButton
+import com.clevmania.leosbook.extension.safelyNavigateTo
 import com.clevmania.leosbook.ui.base.GroundFragment
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import com.clevmania.leosbook.utils.InjectorUtils
@@ -76,7 +79,9 @@ class BookStoreFragment : GroundFragment() {
         btnRetry.setOnClickListener { adapter.retry() }
 
         scrollToTopPositionOnNewSearch()
-//        grpBookStore.makeVisible()
+        fabCart.setOnClickListener {
+            findNavController().safelyNavigateTo(R.id.action_bookStoreFragment_to_cartFragment)
+        }
         searchBooks()
         initAdapter()
     }
@@ -91,6 +96,7 @@ class BookStoreFragment : GroundFragment() {
             rvBookList.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
             progressBar.isVisible = combinedLoadStates.source.refresh is LoadState.Loading
             btnRetry.isVisible = combinedLoadStates.source.refresh is LoadState.Error
+            fabCart.isVisible = combinedLoadStates.source.refresh is LoadState.NotLoading
 
 
             // For any other error
@@ -106,6 +112,8 @@ class BookStoreFragment : GroundFragment() {
                 )
             }
         }
+
+        rvBookList.hideOrShowFloatingActionButton(fabCart)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

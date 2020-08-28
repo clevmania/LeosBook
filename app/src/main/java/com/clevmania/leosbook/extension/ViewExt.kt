@@ -7,6 +7,8 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 /**
  * @author by Lawrence on 7/16/20.
@@ -45,4 +47,17 @@ fun EditText.onActionDone(actionToPerform: () -> Unit) {
             false
         }
     }
+}
+
+fun RecyclerView.hideOrShowFloatingActionButton(fab : FloatingActionButton){
+    this.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            if (dy > 0 && fab.isShown) {
+                fab.hide()
+            } else if (dy < 0 && !fab.isShown) {
+                fab.show()
+            }
+        }
+    })
 }
