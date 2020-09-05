@@ -16,4 +16,10 @@ object UiUtils{
                 Constants.alphaNumericCharacters.length)])
         return "TXF-LB-${sb}"
     }
+
+
+    fun getAuthorsOrCategories(listItems : List<String>?): String{
+        if(listItems.isNullOrEmpty()){ return "N/A" }
+        return listItems.joinToString(separator = ", ", limit = 4)
+    }
 }

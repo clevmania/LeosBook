@@ -2,7 +2,7 @@ package com.clevmania.leosbook.ui.integration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.clevmania.leosbook.data.CartLocalDataSource
+import com.clevmania.leosbook.data.local.CartLocalDataSource
 
 /**
  * @author by Lawrence on 8/3/20.

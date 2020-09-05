@@ -165,7 +165,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Merchants Get In"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         android:fontFamily="@font/source_sans_pro_bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    <color name="colorPrimary">#6200EE</color>-->
-<!--    <color name="colorPrimaryDark">#3700B3</color>-->
-<!--    <color name="colorAccent">#03DAC5</color>-->
     <color name="colorPrimary">#FF9800</color>
     <color name="colorPrimaryDark">#F57C00</color>
     <color name="colorAccent">#795548</color>
@@ -10,12 +7,13 @@
     <color name="colorEditTextBorder">#E5E5E5</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorBlack">#000000</color>
-    <color name="colorTextBody">#212121</color>
-    <color name="colorTextBodyLight">#757575</color>
+    <color name="colorTextPrimary">#212121</color>
+    <color name="colorTextSecondary">#757575</color>
     <color name="colorPrimaryButton">#795548</color>
     <color name="colorGray">#969393</color>
     <color name="colorSearchIcon">#7E7B7B</color>
-    <color name="colorButtonText">#7E7B7B</color>
+    <color name="colorButtonCategoryText">#7E7B7B</color>
+    <color name="colorButtonCategory">#211F1F</color>
     <color name="colorTabText">#6F6E6E</color>
     <color name="colorRatingBarNormal">#E5E5E5</color>
     <color name="lightGray">#f3f3f3</color>
@@ -28,6 +26,9 @@
     <color name="colorIntroTitle">#000000</color>
     <color name="colorIntroDescription">#656565</color>
     <color name="colorDivider">#BDBDBD</color>
+
+    <color name="colorMerchantsIncome">#49A399</color>
+    <color name="colorProcessingFee">#D03C6A</color>
 
 
 </resources>

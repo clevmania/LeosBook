@@ -16,14 +16,16 @@ import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.constants.Constants
-import com.clevmania.leosbook.data.Cart
+import com.clevmania.leosbook.data.local.Cart
 import com.clevmania.leosbook.data.FirebaseUtils
 import com.clevmania.leosbook.extension.formatPrice
-import com.clevmania.leosbook.ui.TopLevelFragment
+import com.clevmania.leosbook.extension.makeVisible
+import com.clevmania.leosbook.ui.base.TopLevelFragment
 import com.clevmania.leosbook.ui.books.detail.model.BookDetailResponse
 import com.clevmania.leosbook.utils.BadgeUtils.convertLayoutToImage
 import com.clevmania.leosbook.utils.GlideApp
 import com.clevmania.leosbook.utils.InjectorUtils
+import com.clevmania.leosbook.utils.UiUtils
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.book_detail_fragment.*
 
@@ -34,7 +36,6 @@ class BookDetailFragment : TopLevelFragment() {
     private lateinit var viewModel: BookDetailViewModel
     private lateinit var viewModelFactory: BookDetailViewModelFactory
 
-    private val customTabPackage = Constants.CHROME_PACKAGE
     private lateinit var customTabsIntent : CustomTabsIntent
     private var customTabsClient : CustomTabsClient? = null
     private var customTabsSession: CustomTabsSession? = null
@@ -118,7 +119,7 @@ class BookDetailFragment : TopLevelFragment() {
         bookInfo = it
         tvBookTitle.text = it.volumeInfo.title
         tvBookPrice.text = getString(R.string.price,it.volumeInfo.pageCount.formatPrice())
-        tvBookAuthor.text = it.volumeInfo.authors.toString()
+        tvBookAuthor.text = UiUtils.getAuthorsOrCategories(it.volumeInfo.authors)
         rbBooksRating.rating = it.volumeInfo.ratingsCount.toFloat()
         GlideApp.with(requireView())
             .load(it.volumeInfo.imageLinks.thumbnail)
@@ -127,13 +128,16 @@ class BookDetailFragment : TopLevelFragment() {
             .transform(CenterCrop())
             .into(ivBookPreview)
         viewModel.saveDescription(it.volumeInfo.description ?: getString(R.string.none_available))
+        grpBookDetail.makeVisible()
     }
 
     private fun addToCart(){
-        val cartItem = Cart(bookInfo.id,bookInfo.volumeInfo.title,
+        val cartItem = Cart(
+            bookInfo.id, bookInfo.volumeInfo.title,
             bookInfo.volumeInfo.imageLinks.thumbnail
-            ,bookInfo.volumeInfo.pageCount,
-            Constants.BOOK_QUANTITY, FirebaseUtils.getUID()!!)
+            , bookInfo.volumeInfo.pageCount,
+            Constants.BOOK_QUANTITY, FirebaseUtils.getUID()!!
+        )
 
         viewModel.addBookToCart(cartItem)
     }
@@ -174,7 +178,7 @@ class BookDetailFragment : TopLevelFragment() {
                 customTabsClient = null
             }
         }
-        CustomTabsClient.bindCustomTabsService(requireContext(),customTabPackage,connection)
+        CustomTabsClient.bindCustomTabsService(requireContext(),Constants.CHROME_PACKAGE,connection)
         customTabsIntent = CustomTabsIntent.Builder(customTabsSession)
             .setShowTitle(true)
             .setStartAnimations(requireContext(), R.anim.slide_in_right, R.anim.slide_out_left)

@@ -1,4 +1,4 @@
-package com.clevmania.leosbook
+package com.clevmania.leosbook.api
 
 import com.clevmania.leosbook.constants.AppKeys
 import okhttp3.OkHttpClient

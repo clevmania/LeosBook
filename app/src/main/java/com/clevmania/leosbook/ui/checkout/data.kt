@@ -4,7 +4,7 @@ import com.clevmania.leosbook.model.FWApiResponse
 import com.clevmania.leosbook.ui.checkout.model.request.BankTransferRequest
 import com.clevmania.leosbook.ui.checkout.model.request.UssdRequest
 import com.clevmania.leosbook.ui.checkout.model.response.Meta
-import com.clevmania.leosbook.ui.checkout.model.transfer.BankAuthorizationMeta
+import com.clevmania.leosbook.ui.checkout.model.transfer.TransferMeta
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -22,14 +22,14 @@ interface UssdOrTransferService {
     @POST("v3/charges?type=bank_transfer")
     suspend fun payWithBankTransfer(
        @Body request: BankTransferRequest
-    ): FWApiResponse<BankAuthorizationMeta>
+    ): FWApiResponse<TransferMeta>
 }
 
 interface UssdOrTransferDataSource {
     suspend fun payWithUssd(type: String= "ussd",request : UssdRequest): FWApiResponse<Meta>
 
     suspend fun payWithBankTransfer(request: BankTransferRequest
-    ): FWApiResponse<BankAuthorizationMeta>
+    ): FWApiResponse<TransferMeta>
 }
 
 class UssdOrTransferRepository(private val apiService: UssdOrTransferService) :
@@ -41,7 +41,7 @@ class UssdOrTransferRepository(private val apiService: UssdOrTransferService) :
     }
 
     override suspend fun payWithBankTransfer(request: BankTransferRequest
-    ): FWApiResponse<BankAuthorizationMeta> {
+    ): FWApiResponse<TransferMeta> {
         return apiService.payWithBankTransfer(request)
     }
 }

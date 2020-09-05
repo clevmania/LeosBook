@@ -18,11 +18,17 @@ fun String.formatDate() : String{
 fun Int.formatAmount(): String{
     val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
     formatter.applyPattern("#,###,###,###.00")
-    return "\u20a6${formatter.format(this)}"
+    return when (this){
+        0 -> "\u20a60.00"
+        else -> "\u20a6${formatter.format(this)}"
+    }
 }
 
 fun Double.formatAmount(): String{
     val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
-    formatter.applyPattern("#,###,###,##0.00")
-    return "\u20a6${formatter.format(this)}"
+    formatter.applyPattern("#,###,###,###.00")
+    return when (this){
+        0.0 -> "\u20a60.00"
+        else -> "\u20a6${formatter.format(this)}"
+    }
 }

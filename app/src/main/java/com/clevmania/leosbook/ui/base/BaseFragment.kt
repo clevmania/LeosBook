@@ -1,10 +1,11 @@
-package com.clevmania.leosbook.ui
+package com.clevmania.leosbook.ui.base
 
 import android.app.AlertDialog
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.navigation.fragment.findNavController
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.utils.ProgressDialogUtils
 import com.google.android.material.snackbar.Snackbar
@@ -48,18 +49,16 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun showTransactionErrorMessageDialog(message: String){
-        if(message.toLowerCase() != "authorization failed for this request!") {
-            val builder = AlertDialog.Builder(requireContext())
-            builder.setCancelable(false)
-            builder.setTitle("Oops...." )
-            builder.setMessage(message)
-            builder.setPositiveButton("OK") { dialogInterface, _ ->
-                dialogInterface.dismiss()
-                (requireContext() as FragmentActivity).finish()
-            }
-            builder.create().show()
+    fun showTransactionSuccessDialog(message: String){
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setCancelable(false)
+        builder.setTitle(getString(R.string.title_api_success) )
+        builder.setMessage(message)
+        builder.setPositiveButton("OK") { dialogInterface, _ ->
+            dialogInterface.dismiss()
+            findNavController().popBackStack(R.id.bookStoreFragment, false)
         }
+        builder.create().show()
     }
 
     fun showSuccessDialog(message: String, title: String = getString(R.string.title_api_success)){
@@ -87,15 +86,18 @@ abstract class BaseFragment : Fragment() {
     }
 }
 
-abstract class TopLevelFragment : BaseFragment(), ToolbarFragment{
+abstract class TopLevelFragment : BaseFragment(),
+    ToolbarFragment {
     override val showToolbar = true
 }
 
-abstract class GroundFragment : BaseFragment(), ToolbarFragment{
+abstract class GroundFragment : BaseFragment(),
+    ToolbarFragment {
     override val showToolbar = false
 }
 
-abstract class AuthFragment : BaseFragment(), ToolbarFragment{
+abstract class AuthFragment : BaseFragment(),
+    ToolbarFragment {
     override val showToolbar = false
 
     override fun onStart() {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.books.vol.BookStoreFragment">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -18,22 +18,22 @@
         app:boxStrokeColor="#E5E5E5"
         app:boxStrokeWidth="1dp"
         app:hintEnabled="false"
-        app:startIconDrawable="@drawable/ic_search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent"
+        app:startIconDrawable="@drawable/ic_search">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tieSearchBooks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
             android:background="@drawable/edit_text_background"
-            android:hint="Search books"
             android:fontFamily="@font/source_sans_pro_regular"
+            android:hint="Search books"
             android:imeOptions="actionSearch"
             android:inputType="text"
-            android:textColorHint="@color/colorGray" />
+            android:textColorHint="@color/colorGray"
+            android:textSize="14sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,72 +48,87 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilSearchBook">
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:chipSpacingHorizontal="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilSearchBook"
+            app:singleSelection="true">
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
+                android:id="@+id/btnAll"
+                style="@style/ChipSelectedState"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="50dp"
+                android:checked="true"
+                android:fontFamily="@font/source_sans_pro_bold"
                 android:text="All"
-                android:fontFamily="@font/source_sans_pro_bold"
-                android:backgroundTint="#211F1F"
-                app:cornerRadius="4dp"
+                android:textAlignment="center"
                 android:textAllCaps="false"
-                android:textColor="@color/colorWhite"
                 android:textSize="16sp"
-                />
+                app:chipCornerRadius="4dp"
+                app:chipEndPadding="24dp"
+                app:chipStartPadding="24dp"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@android:color/transparent" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnSciFi"
+                style="@style/ChipSelectedState"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_marginEnd="8dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/source_sans_pro_bold"
                 android:text="Sci-Fi"
-                android:fontFamily="@font/source_sans_pro_bold"
                 android:textAllCaps="false"
-                android:textColor="@color/colorButtonText"
-                app:strokeColor="@color/colorButtonText"/>
+                app:chipEndPadding="24dp"
+                app:chipStartPadding="24dp"
+                app:chipStrokeColor="@color/chip_stroke_color"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@android:color/transparent" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnRomance"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/ChipSelectedState"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/source_sans_pro_bold"
                 android:text="Romance"
-                android:fontFamily="@font/source_sans_pro_bold"
                 android:textAllCaps="false"
-                android:textColor="@color/colorButtonText"
-                app:strokeColor="@color/colorButtonText"/>
+                app:chipEndPadding="24dp"
+                app:chipStartPadding="24dp"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@android:color/transparent" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnArts"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/ChipSelectedState"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="50dp"
+                android:fontFamily="@font/source_sans_pro_bold"
                 android:text="Arts"
-                android:fontFamily="@font/source_sans_pro_bold"
                 android:textAllCaps="false"
-                android:textColor="@color/colorButtonText"
-                app:strokeColor="@color/colorButtonText"/>
+                app:chipEndPadding="24dp"
+                app:chipStartPadding="24dp"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@android:color/transparent" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/btnHistory"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                style="@style/ChipSelectedState"
                 android:layout_width="wrap_content"
-                android:layout_height="45dp"
-                android:layout_marginEnd="8dp"
-                android:text="History"
+                android:layout_height="50dp"
                 android:fontFamily="@font/source_sans_pro_bold"
+                android:text="History"
                 android:textAllCaps="false"
-                android:textColor="@color/colorButtonText"
-                app:strokeColor="@color/colorButtonText"/>
+                app:chipEndPadding="24dp"
+                app:chipStartPadding="24dp"
+                app:chipStrokeWidth="1dp"
+                app:rippleColor="@android:color/transparent" />
 
-        </LinearLayout>
+        </com.google.android.material.chip.ChipGroup>
 
     </HorizontalScrollView>
 
@@ -124,19 +139,60 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView"
+        app:spanCount="2"
         tools:listitem="@layout/item_book" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/grpBookStore"
+    <!--    <androidx.constraintlayout.widget.Group-->
+    <!--        android:id="@+id/grpBookStore"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:visibility="gone"-->
+    <!--        app:constraint_referenced_ids="rvBookList,horizontalScrollView,tilSearchBook"/>-->
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="rvBookList,horizontalScrollView,tilSearchBook"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnRetry"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="@font/source_sans_pro_bold"
+        android:text="Retry"
+        android:textAllCaps="false"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:cornerRadius="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabCart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
+        android:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_shopping_cart"
+        app:tint="@color/colorWhite"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

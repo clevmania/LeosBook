@@ -53,7 +53,7 @@ class CheckOutViewModel(private val dataSource: UssdOrTransferDataSource) : View
             try {
                 val meta = dataSource.payWithBankTransfer(request)
                 meta.meta?.let {
-                    _transferMeta.value = UiEventUtils(it)
+                    _transferMeta.value = UiEventUtils(it.authorization)
                 }
             } catch (ex: Exception) {
                 _error.value = UiEventUtils(ex.toDefaultErrorMessage())

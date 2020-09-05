@@ -1,4 +1,4 @@
-package com.clevmania.leosbook.data
+package com.clevmania.leosbook.data.local
 
 import android.content.Context
 import androidx.room.Database
@@ -18,8 +18,10 @@ abstract class CartDatabase : RoomDatabase() {
         @Volatile private var instance : CartDatabase? = null
 
         fun getInstance(context: Context): CartDatabase {
-            return instance ?: synchronized(this){
-                instance ?: Room.databaseBuilder(
+            return instance
+                ?: synchronized(this){
+                instance
+                    ?: Room.databaseBuilder(
                     context.applicationContext,
                     CartDatabase::class.java, Constants.DATABASE_NAME
                 ).build().also { instance = it }

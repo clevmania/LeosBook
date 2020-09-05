@@ -28,7 +28,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/source_sans_pro_semi_bold"
         android:maxLines="1"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         tools:text="Wild Game: My Mother, Her..."
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/ivBookImg"
@@ -42,7 +42,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/source_sans_pro_regular"
         tools:text="ROMANCE"
-        android:textColor="@color/colorTextBodyLight"
+        android:textColor="@color/colorTextSecondary"
         android:textSize="@dimen/ten_dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBookTitle" />
@@ -54,7 +54,7 @@
         android:layout_marginTop="2dp"
         android:fontFamily="@font/source_sans_pro_regular"
         tools:text="Jim Butcher"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="@dimen/ten_dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBookCategory" />
@@ -66,7 +66,7 @@
         android:layout_marginTop="4dp"
         android:fontFamily="@font/source_sans_pro_bold"
         tools:text="NGN 5,650"
-        android:textColor="@color/colorTextBody"
+        android:textColor="@color/colorTextPrimary"
         android:textSize="@dimen/ten_dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBookAuthor" />
