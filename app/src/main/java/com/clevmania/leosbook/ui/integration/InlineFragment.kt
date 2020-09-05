@@ -75,7 +75,7 @@ class InlineFragment : TopLevelFragment() {
             verificationResponse.observe(viewLifecycleOwner, Observer { uiEvent ->
                 uiEvent.getContentIfNotHandled()?.let {
                     if (it.status == Constants.API_TRANSACTION_SUCCESS) {
-                        showSuccessDialog("Transaction Successful")
+                        showTransactionSuccessDialog("Transaction Successful")
                         FirebaseUtils.getUID()?.let { uid -> clearCart(uid) }
                     }
                 }

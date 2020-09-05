@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.clevmania.leosbook.R
 import com.clevmania.leosbook.extension.formatPrice
+import com.clevmania.leosbook.extension.toSafeDirection
 import com.clevmania.leosbook.ui.books.vol.model.Item
 import com.clevmania.leosbook.utils.UiUtils
 import kotlinx.android.synthetic.main.item_book.view.*
@@ -53,7 +54,7 @@ class BookAdapter : PagingDataAdapter<Item, BookAdapter.ViewHolder>(BOOK_COMPARA
             itemView.setOnClickListener {
                 val action = BookStoreFragmentDirections
                     .actionBookStoreFragmentToBookDetailFragment(book.id)
-                it.findNavController().navigate(action)
+                it.findNavController().toSafeDirection(action)
             }
         }
     }
